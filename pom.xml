@@ -7,9 +7,27 @@
 	<packaging>war</packaging>
 	<name>demojsf2-web</name>
 	<description>Exemple d'utilisation JSF2</description>
+
 	<properties>
 		<richfaces.version>4.1.0.Final</richfaces.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
 	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<!-- Dependances vers demo metier -->
 		<dependency>
