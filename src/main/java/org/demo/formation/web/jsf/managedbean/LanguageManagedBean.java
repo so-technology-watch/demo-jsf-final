@@ -10,46 +10,50 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
-@ManagedBean(name="languageManagedBean")
+@ManagedBean(name = "languageManagedBean")
 @SessionScoped
-public class LanguageManagedBean implements Serializable{
+public class LanguageManagedBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7363102130668421016L;
 
-	private String localeCode;
+	private String localeCode = FacesContext.getCurrentInstance().getViewRoot().getLocale().toString();
+	private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 
-	private static Map<String,Object> countries;
-	static{
-		countries = new LinkedHashMap<String,Object>();
-		countries.put("Français", Locale.FRANCE);
+	private static Map<String, Object> countries;
+	static {
+		countries = new LinkedHashMap<String, Object>();
 		countries.put("English", Locale.US); // value, label
+		countries.put("FranÃ§ais", Locale.FRANCE);
 	}
 
 	public Map<String, Object> getCountriesInMap() {
 		return countries;
 	}
 
+	public Locale getLocale() {
+		return locale;
+	}
 
 	public String getLocaleCode() {
 		return localeCode;
 	}
 
-
 	public void setLocaleCode(String localeCode) {
 		this.localeCode = localeCode;
 	}
 
-	//value change event listener
-	public void countryLocaleCodeChanged(ValueChangeEvent e){
-		if (e != null){
+	// value change event listener
+	public void countryLocaleCodeChanged(ValueChangeEvent e) {
+		if (e != null) {
 			String newLocaleValue = e.getNewValue().toString();
-			//loop country map to compare the locale code
+			// loop country map to compare the locale code
 			for (Map.Entry<String, Object> entry : countries.entrySet()) {
-				if(entry.getValue().toString().equals(newLocaleValue)){
-					FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale)entry.getValue());
+				if (entry.getValue().toString().equals(newLocaleValue)) {
+					FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
+					this.locale = (Locale) entry.getValue();
 				}
 			}
 		}
