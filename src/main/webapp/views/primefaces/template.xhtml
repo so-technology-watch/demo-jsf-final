@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view locale="#{languageManagedBean.locale}" />
+<p:growl id="growl" for="growl" showDetail="true" autoUpdate="true" />
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>#{msg.home_app_name}</title>
+	<link rel="stylesheet"
+		href="#{request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="#{request.contextPath}/css/styles.css" />
+</h:head>
+
+<h:body>
+	<h:form>
+		<header>
+		<div align="left">
+			<h:panelGroup rendered="#{userManagedBean.loginUser ne null}">
+				<h:outputText value="#{msg.home_wel}" />
+				<b>${userManagedBean.loginUser.nom}</b>
+				<h:commandLink action="#{loginBean.logoutAction()}">
+					<h:graphicImage width="30" value="../../img/btn_logout.jpg"
+						title="#{msg.logout}" />
+				</h:commandLink>
+			</h:panelGroup>
+		</div>
+		<div align="right">
+			<h:selectOneMenu value="#{languageManagedBean.localeCode}"
+				onchange="submit()"
+				valueChangeListener="#{languageManagedBean.countryLocaleCodeChanged}">
+				<f:selectItems value="#{languageManagedBean.countriesInMap}" />
+			</h:selectOneMenu>
+		</div>
+		</header>
+	</h:form>
+
+	<ui:insert name="body">
+	</ui:insert>
+
+	<ui:insert name="script">
+	</ui:insert>
+</h:body>
+</html>
