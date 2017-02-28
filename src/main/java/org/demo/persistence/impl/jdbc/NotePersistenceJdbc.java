@@ -13,103 +13,114 @@ import java.util.List;
 import javax.inject.Named;
 
 
-import org.demo.data.record.CoursRecord ;
-import org.demo.persistence.CoursPersistence;
+import org.demo.data.record.NoteRecord ;
+import org.demo.persistence.NotePersistence;
 import org.demo.persistence.impl.jdbc.commons.GenericDAO;
 
 /**
- * Cours persistence implementation 
+ * Note persistence implementation 
  * 
  * @author Telosys
  *
  */
-@Named("CoursPersistence")
-public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements CoursPersistence {
+@Named("NotePersistence")
+public class NotePersistenceJdbc extends GenericDAO<NoteRecord> implements NotePersistence {
 
 	private final static String SQL_SELECT_ALL = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours"; 
+		"select ID_COURS, ID_ELEVE, NOTE_OBTENUE, DATE_EXAMEN, CODE_MENTION from note"; 
 
 	private final static String SQL_SELECT = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours where ID_COURS = ?";
+		"select ID_COURS, ID_ELEVE, NOTE_OBTENUE, DATE_EXAMEN, CODE_MENTION from note where ID_COURS = ? and ID_ELEVE = ?";
 
 	private final static String SQL_INSERT = 
-		"insert into cours ( ID_COURS, LIBELLE, NB_HEURES ) values ( ?, ?, ? )";
+		"insert into note ( ID_COURS, ID_ELEVE, NOTE_OBTENUE, DATE_EXAMEN, CODE_MENTION ) values ( ?, ?, ?, ?, ? )";
 
 	private final static String SQL_UPDATE = 
-		"update cours set LIBELLE = ?, NB_HEURES = ? where ID_COURS = ?";
+		"update note set NOTE_OBTENUE = ?, DATE_EXAMEN = ?, CODE_MENTION = ? where ID_COURS = ? and ID_ELEVE = ?";
 
 	private final static String SQL_DELETE = 
-		"delete from cours where ID_COURS = ?";
+		"delete from note where ID_COURS = ? and ID_ELEVE = ?";
 
 	private final static String SQL_COUNT_ALL = 
-		"select count(*) from cours";
+		"select count(*) from note";
 
 	private final static String SQL_COUNT = 
-		"select count(*) from cours where ID_COURS = ?";
+		"select count(*) from note where ID_COURS = ? and ID_ELEVE = ?";
 
     //----------------------------------------------------------------------
 	/**
 	 * DAO constructor
 	 */
-	public CoursPersistenceJdbc() {
+	public NotePersistenceJdbc() {
 		super();
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, NoteRecord note) throws SQLException {
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, note.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, note.getIdEleve() ) ; // "ID_ELEVE" : java.lang.Integer
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForInsert(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForInsert(PreparedStatement ps, int i, NoteRecord note) throws SQLException {
 		//--- Set PRIMARY KEY and DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, note.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, note.getIdEleve() ) ; // "ID_ELEVE" : java.lang.Integer
+		setValue(ps, i++, note.getNoteObtenue() ) ; // "NOTE_OBTENUE" : java.math.BigDecimal
+		setValue(ps, i++, note.getDateExamen() ) ; // "DATE_EXAMEN" : java.util.Date
+		setValue(ps, i++, note.getCodeMention() ) ; // "CODE_MENTION" : java.lang.Integer
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForUpdate(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForUpdate(PreparedStatement ps, int i, NoteRecord note) throws SQLException {
 		//--- Set DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, note.getNoteObtenue() ) ; // "NOTE_OBTENUE" : java.math.BigDecimal
+		setValue(ps, i++, note.getDateExamen() ) ; // "DATE_EXAMEN" : java.util.Date
+		setValue(ps, i++, note.getCodeMention() ) ; // "CODE_MENTION" : java.lang.Integer
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, note.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, note.getIdEleve() ) ; // "ID_ELEVE" : java.lang.Integer
 	}
 
 	//----------------------------------------------------------------------
 	/**
 	 * Creates a new instance of the bean and populates it with the given primary value(s)
 	 * @param idCours;
+	 * @param idEleve;
 	 * @return the new instance
 	 */
-	private CoursRecord newInstanceWithPrimaryKey( Integer idCours ) {
-		CoursRecord cours = new CoursRecord();
-		cours.setIdCours( idCours );
-		return cours ;
+	private NoteRecord newInstanceWithPrimaryKey( Integer idCours, Integer idEleve ) {
+		NoteRecord note = new NoteRecord();
+		note.setIdCours( idCours );
+		note.setIdEleve( idEleve );
+		return note ;
 	}
 
 	//----------------------------------------------------------------------
 	@Override
-	protected CoursRecord newInstance() {
-		return new CoursRecord() ;
+	protected NoteRecord newInstance() {
+		return new NoteRecord() ;
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected CoursRecord populateBean(ResultSet rs, CoursRecord cours) throws SQLException {
+	protected NoteRecord populateBean(ResultSet rs, NoteRecord note) throws SQLException {
 
 		//--- Set data from ResultSet to Bean attributes
-		cours.setIdCours(rs.getInt("ID_COURS")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setIdCours(null); }; // not primitive number => keep null value if any
-		cours.setLibelle(rs.getString("LIBELLE")); // java.lang.String
-		cours.setNbHeures(rs.getInt("NB_HEURES")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setNbHeures(null); }; // not primitive number => keep null value if any
-		return cours ;
+		note.setIdCours(rs.getInt("ID_COURS")); // java.lang.Integer
+		if ( rs.wasNull() ) { note.setIdCours(null); }; // not primitive number => keep null value if any
+		note.setIdEleve(rs.getInt("ID_ELEVE")); // java.lang.Integer
+		if ( rs.wasNull() ) { note.setIdEleve(null); }; // not primitive number => keep null value if any
+		note.setNoteObtenue(rs.getBigDecimal("NOTE_OBTENUE")); // java.math.BigDecimal
+		if ( rs.wasNull() ) { note.setNoteObtenue(null); }; // not primitive number => keep null value if any
+		note.setDateExamen(rs.getDate("DATE_EXAMEN")); // java.util.Date
+		note.setCodeMention(rs.getInt("CODE_MENTION")); // java.lang.Integer
+		if ( rs.wasNull() ) { note.setCodeMention(null); }; // not primitive number => keep null value if any
+		return note ;
 	}
 
 	//----------------------------------------------------------------------
@@ -117,10 +128,10 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord findById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		if ( super.doSelect(cours) ) {
-			return cours ;
+	public NoteRecord findById( Integer idCours, Integer idEleve ) {
+		NoteRecord note = newInstanceWithPrimaryKey( idCours, idEleve ) ;
+		if ( super.doSelect(note) ) {
+			return note ;
 		}
 		else {
 			return null ; // Not found
@@ -131,7 +142,7 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public List<CoursRecord> findAll() {
+	public List<NoteRecord> findAll() {
 		return super.doSelectAll();
 	}
 
@@ -140,21 +151,21 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * Loads the given bean, it is supposed to contains the primary key value(s) in its attribute(s)<br>
 	 * If found, the given instance is populated with the values retrieved from the database<br>
 	 * If not found, the given instance remains unchanged
-	 * @param cours
+	 * @param note
 	 * @return true if found, false if not found
 	 */
 	//@Override
-	public boolean load( CoursRecord cours ) {
-		return super.doSelect(cours) ;
+	public boolean load( NoteRecord note ) {
+		return super.doSelect(note) ;
 	}
 
     //----------------------------------------------------------------------
 	/**
 	 * Inserts the given bean in the database 
-	 * @param cours
+	 * @param note
 	 */
-	public long insert(CoursRecord cours) {
-		super.doInsert(cours);
+	public long insert(NoteRecord note) {
+		super.doInsert(note);
 		return 0L ;
 	}
 
@@ -163,9 +174,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord create(CoursRecord cours) {
-		insert(cours);
-		return cours ;
+	public NoteRecord create(NoteRecord note) {
+		insert(note);
+		return note ;
 	}	
 
     //----------------------------------------------------------------------
@@ -173,8 +184,8 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean update(CoursRecord cours) {
-		int r = super.doUpdate(cours);
+	public boolean update(NoteRecord note) {
+		int r = super.doUpdate(note);
 		return r > 0 ;
 
 	}	
@@ -184,14 +195,14 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord save(CoursRecord cours) {
-		if ( super.doExists(cours) ) {
-			super.doUpdate(cours);
+	public NoteRecord save(NoteRecord note) {
+		if ( super.doExists(note) ) {
+			super.doUpdate(note);
 		}
 		else {
-			super.doInsert(cours);
+			super.doInsert(note);
 		}
-		return cours ;
+		return note ;
 	}	
 
     //----------------------------------------------------------------------
@@ -199,9 +210,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean deleteById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		int r = super.doDelete(cours);
+	public boolean deleteById( Integer idCours, Integer idEleve ) {
+		NoteRecord note = newInstanceWithPrimaryKey( idCours, idEleve ) ;
+		int r = super.doDelete(note);
 		return r > 0 ;
 	}
 
@@ -210,8 +221,8 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean delete( CoursRecord cours ) {
-		int r = super.doDelete(cours);
+	public boolean delete( NoteRecord note ) {
+		int r = super.doDelete(note);
 		return r > 0 ;
 	}
 
@@ -219,22 +230,23 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	/**
 	 * Checks the existence of a record in the database using the given primary key value(s)
 	 * @param idCours;
+	 * @param idEleve;
 	 * @return
 	 */
 	// @Override
-	public boolean exists( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		return super.doExists(cours);
+	public boolean exists( Integer idCours, Integer idEleve ) {
+		NoteRecord note = newInstanceWithPrimaryKey( idCours, idEleve ) ;
+		return super.doExists(note);
 	}
     //----------------------------------------------------------------------
 	/**
 	 * Checks the existence of the given bean in the database 
-	 * @param cours
+	 * @param note
 	 * @return
 	 */
 	// @Override
-	public boolean exists( CoursRecord cours ) {
-		return super.doExists(cours);
+	public boolean exists( NoteRecord note ) {
+		return super.doExists(note);
 	}
 
     //----------------------------------------------------------------------

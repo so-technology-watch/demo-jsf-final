@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Telosys Database Repository --><root>
-<tableList databaseId="0" databaseName="demo-jsf-final" databaseProductName="MySQL" generation="2017-02-28 11:48:48">
+<tableList databaseId="0" databaseName="demo-jsf-final" databaseProductName="MySQL" generation="2017-02-28 17:39:57">
 <table catalog="demo-jsf-final" databaseType="TABLE" javaBean="Cours" name="cours" schema="">
 <column dbComment="" dbDefaultValue="" dbName="ID_COURS" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idCours" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id cours" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbName="LIBELLE" dbNotNull="false" dbPosition="2" dbSize="254" dbTypeName="VARCHAR" inputType="text" javaName="libelle" javaType="java.lang.String" jdbcTypeCode="12" label="Libelle" maxLength="254" notNull="false" selected="true"/>
@@ -20,8 +20,8 @@
 <link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="FK_ELEVE_APOUR_NOTES" id="LINK_FK_FK_ELEVE_APOUR_NOTES_I" inverseSideOf="LINK_FK_FK_ELEVE_APOUR_NOTES_O" javaName="listOfNote" javaType="java.util.List" joinTableName="" mappedBy="eleve" optional="" owningSide="false" sourceTableName="eleve" targetEntity="Note" targetTableName="note" used="true"/>
 </table>
 <table catalog="demo-jsf-final" databaseType="TABLE" javaBean="Note" name="note" schema="">
-<column dbComment="" dbDefaultValue="" dbName="ID_COURS" dbNotNull="true" dbPosition="1" dbSize="10" dbTypeName="INT" inputType="number" javaName="idCours" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id cours" notNull="true" selected="true"/>
-<column dbComment="" dbDefaultValue="" dbName="ID_ELEVE" dbNotNull="true" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="idEleve" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id eleve" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="ID_COURS" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idCours" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id cours" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="ID_ELEVE" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idEleve" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id eleve" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbName="NOTE_OBTENUE" dbNotNull="true" dbPosition="3" dbSize="8" dbTypeName="DECIMAL" inputType="number" javaName="noteObtenue" javaType="java.math.BigDecimal" jdbcTypeCode="3" label="Note obtenue" notNull="true" selected="true"/>
 <column dateType="DT" dbComment="" dbDefaultValue="" dbName="DATE_EXAMEN" dbNotNull="true" dbPosition="4" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="dateExamen" javaType="java.util.Date" jdbcTypeCode="93" label="Date examen" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbName="CODE_MENTION" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="codeMention" javaType="java.lang.Integer" jdbcTypeCode="4" label="Code mention" notNull="false" selected="true"/>

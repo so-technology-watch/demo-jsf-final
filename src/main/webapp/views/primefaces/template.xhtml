@@ -3,8 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
 <f:view locale="#{languageManagedBean.locale}" />
 <p:growl id="growl" for="growl" showDetail="true" autoUpdate="true" />
 
@@ -14,6 +15,7 @@
 	<link rel="stylesheet"
 		href="#{request.contextPath}/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="#{request.contextPath}/css/styles.css" />
+	<script type="text/javascript" src="#{request.contextPath}/js/demo.js"></script>
 </h:head>
 
 <h:body>
@@ -30,11 +32,11 @@
 			</h:panelGroup>
 		</div>
 		<div align="right">
-			<h:selectOneMenu value="#{languageManagedBean.localeCode}"
+			<p:selectOneMenu value="#{languageManagedBean.localeCode}"
 				onchange="submit()"
 				valueChangeListener="#{languageManagedBean.countryLocaleCodeChanged}">
 				<f:selectItems value="#{languageManagedBean.countriesInMap}" />
-			</h:selectOneMenu>
+			</p:selectOneMenu>
 		</div>
 		</header>
 	</h:form>

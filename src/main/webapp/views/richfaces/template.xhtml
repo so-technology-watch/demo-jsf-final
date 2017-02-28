@@ -3,17 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
 <f:view locale="#{languageManagedBean.locale}" />
-<p:growl id="growl" for="growl" showDetail="true" autoUpdate="true" />
 
 <h:head>
 	<meta charset="UTF-8" />
 	<title>#{msg.home_app_name}</title>
-	<link rel="stylesheet"
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/css/styles.css" />
+	<link rel="stylesheet" type="text/css"
 		href="#{request.contextPath}/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="#{request.contextPath}/css/styles.css" />
+	<script type="text/javascript" src="#{request.contextPath}/js/demo.js"></script>
 </h:head>
 
 <h:body>
