@@ -1,0 +1,127 @@
+#checkId($entity)
+#parse("../include/init_variables.vm")
+#parse("../include/java_header.vm")
+##--------------------------------------------------------------------------------------------------------
+#set( $persistenceInterface = "${entity.name}Persistence" )
+#set( $keyValues   = $fn.buildValues($entity.keyAttributes,     1) )
+#set( $dataValues  = $fn.buildValues($entity.nonKeyAttributes , 1) )
+#set( $dataValues2 = $fn.buildValues($entity.nonKeyAttributes , 2) )
+#set( $keyValues3  = $fn.buildValues($entity.keyAttributes,     3) )
+##--------------------------------------------------------------------------------------------------------
+package ${target.javaPackageFromFolder($TEST_SRC)};
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.sql.SQLException;
+
+import ${recordPackage}.${recordClass} ;
+import ${ROOT_PKG}.persistence.${entity.name}Persistence;
+
+/**
+ * Generic test class for a persistence service
+ * 
+ * @author Telosys Tools
+ *
+ */
+public class ${entity.name}PersistenceGenericTest {
+
+	/**
+	 * Generic test for a persistence service
+	 * @param persistenceService
+	 * @throws SQLException
+	 */
+	public void testPersistenceService(${persistenceInterface} persistenceService) throws SQLException {
+    	System.out.println("--- test ${persistenceInterface} ");
+
+    	assertTrue( persistenceService.countAll() == 0 );
+
+    	${recordClass} $recordInstance = new ${recordClass}();
+##-----------------------------------------------------------------------------
+		//--- Key values
+#if ( $entity.hasAutoIncrementedKey() )
+		// Auto-incremented key : nothing to set in the Primary Key
+#else
+#foreach( $attribute in $entity.keyAttributes )
+		${recordInstance}.${attribute.setter}($keyValues.getValue($attribute.name)); // "$attribute.databaseName" : $attribute.fullType
+#end
+#end
+		//--- Other values
+#foreach( $attribute in $entity.nonKeyAttributes )
+		${recordInstance}.${attribute.setter}($dataValues.getValue($attribute.name)); // "$attribute.databaseName" : $attribute.fullType
+#end
+
+##-----------------------------------------------------------------------------
+
+    	//--- CREATE
+    	System.out.println("Insert : " + ${recordInstance} );
+#if ( $entity.hasAutoIncrementedKey() )
+    	$entity.autoincrementedKeyAttribute.type pkAutoIncr = (${entity.autoincrementedKeyAttribute.type}) persistenceService.create(${recordInstance});
+		${recordInstance}.${entity.autoincrementedKeyAttribute.setter}( pkAutoIncr );
+    	assertTrue( persistenceService.exists(pkAutoIncr) );
+#else
+    	persistenceService.create(${recordInstance});
+    	assertTrue( persistenceService.exists($keyValues.allValues) );
+#end
+    	assertTrue( persistenceService.countAll() == 1 );
+    	assertTrue( persistenceService.exists($recordInstance) );
+    	
+    	//--- FIND
+    	System.out.println("Find..." );
+#if ( $entity.hasAutoIncrementedKey() )
+    	${recordClass} ${recordInstance}2 = persistenceService.findById(pkAutoIncr);
+#else
+    	${recordClass} ${recordInstance}2 = persistenceService.findById($keyValues.allValues);
+#end
+    	assertNotNull(${recordInstance}2);
+#if ( $entity.hasAutoIncrementedKey() == false )
+#foreach( $attribute in $entity.keyAttributes )
+##		assertTrue( $keyValues.javaValueComparedTo("${recordInstance}2", $attribute) ) ;
+		assertTrue( $keyValues.comparisonStatement("${recordInstance}2", $attribute) ) ;
+#end
+#end
+    	assertTrue( persistenceService.exists(${recordInstance}2) ) ;
+    	
+#if ( $entity.nonKeyAttributesCount > 0 )
+    	//--- UPDATE
+		//--- Change values
+#foreach( $attribute in $entity.nonKeyAttributes )
+		${recordInstance}2.${attribute.setter}($dataValues2.getValue($attribute.name)); // "$attribute.databaseName" : $attribute.fullType
+#end
+    	System.out.println("Update : " + ${recordInstance}2 );
+    	assertTrue( persistenceService.update(${recordInstance}2) );
+#else
+    	//--- NO UPDATE FOR THIS ENTITY (ALL COLUMNS IN PRIMARY KEY)
+#end
+    	
+    	//--- RELOAD AFTER UPDATE
+#if ( $entity.hasAutoIncrementedKey() )
+    	${recordClass} ${recordInstance}3 = persistenceService.findById(pkAutoIncr);
+#else
+    	${recordClass} ${recordInstance}3 = persistenceService.findById($keyValues.allValues);
+#end
+    	assertNotNull(${recordInstance}3);
+    	System.out.println("Found : " + ${recordInstance}3 );
+#foreach( $attribute in $entity.nonKeyAttributes )
+		assertEquals(${recordInstance}2.${attribute.getter}(), ${recordInstance}3.${attribute.getter}() ); 
+#end
+
+    	//--- DELETE
+    	System.out.println("Delete : " + ${recordInstance}2 );
+    	assertTrue( persistenceService.delete(${recordInstance}2) ); // Delete #1 : OK
+    	assertFalse( persistenceService.delete(${recordInstance}2) ); // Nothing (already deleted)
+    	assertFalse( persistenceService.deleteById($keyValues.allValues) ); // Nothing (already deleted)
+
+    	assertTrue( persistenceService.countAll() == 0 );
+    	assertFalse( persistenceService.exists($keyValues.allValues) ) ;
+    	assertFalse( persistenceService.exists(${recordInstance}2) ) ;
+    	${recordInstance}2 = persistenceService.findById($keyValues.allValues);
+    	assertNull( ${recordInstance}2 );
+    	
+    	System.out.println("Normal end of persistence service test." );
+	}
+
+}
