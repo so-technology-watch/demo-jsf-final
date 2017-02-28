@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.demo.formation.librairie.bean.provider.FactoryServiceProvider;
-import org.demo.formation.librairie.entity.Eleve;
 import org.demo.formation.librairie.exception.DemoBusinessException;
 import org.demo.formation.librairie.service.IEleveService;
 import org.demo.formation.librairie.service.impl.EleveServiceImpl;
