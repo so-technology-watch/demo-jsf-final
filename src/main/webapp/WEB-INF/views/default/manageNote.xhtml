@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/layouts/default.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<section class="container">
+			<div class="pages">
+				<header>
+				<div align="left">
+					<h1>
+						<h:outputText value="#{msg.subscribe_title}" />
+					</h1>
+				</div>
+				</header>
+				<div class="connexion">
+				    <div class="form-group form-group-lg">
+						<h:selectOneMenu value="#{noteManagedBean.currentNote.idEleve}" disabled="${noteManagedBean.updateMode}">
+							<f:selectItems value="#{noteManagedBean.studentList}" var="currentStudent" 
+							    itemValue="#{currentStudent.idEleve}"
+								itemLabel="#{currentStudent.nom}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group form-group-lg">
+						<h:selectOneMenu value="#{noteManagedBean.currentNote.idCours}" disabled="${noteManagedBean.updateMode}">
+							<f:selectItems value="#{noteManagedBean.coursList}" var="currentCourse" 
+							    itemValue="#{currentCourse.idCours}"
+								itemLabel="#{currentCourse.libelle}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group form-group-lg">
+						<h:inputText class="form-control no-border" id="noteCompId"
+							p:placeholder="Note Value"
+							value="#{noteManagedBean.currentNote.noteObtenue}" />
+						<h:message for="noteCompId" />
+					</div>
+					<div class="form-group form-group-lg">
+						<h:inputText class="form-control no-border" id="examDateCompId"
+							p:placeholder="Exam date(dd-MM-yyyy)" value="#{noteManagedBean.currentNote.dateExamen}" title="Exam Date(dd-MM-yyyy)">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:inputText>
+						<h:message for="examDateCompId" />
+					</div>
+					<div class="form-group form-group-lg">
+						<h:selectOneMenu value="#{noteManagedBean.currentNote.codeMention}">
+							<f:selectItems value="#{noteManagedBean.mentions}" var="currentGrade" 
+							    itemValue="#{currentGrade.code}"
+								itemLabel="#{currentGrade.libelle}" />
+						</h:selectOneMenu>
+					</div>
+					<br />
+					<h:inputHidden value="${noteManagedBean.updateMode}" />
+					<h:commandButton
+						styleClass="btn btn-success no-border btn-lg btn-block"
+						value="Valider" action="#{noteManagedBean.addNoteAction}" /> 
+					<h:messages style="color:red;margin:8px;" globalOnly="true" />
+				</div>
+			</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
