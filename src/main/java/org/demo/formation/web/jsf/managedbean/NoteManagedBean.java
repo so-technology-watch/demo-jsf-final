@@ -2,10 +2,8 @@ package org.demo.formation.web.jsf.managedbean;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 import org.demo.formation.librairie.bean.provider.FactoryServiceProvider;
 import org.demo.formation.librairie.service.ICoursService;
@@ -48,15 +46,16 @@ public class NoteManagedBean {
 
 
 	public String addNoteAction(){
-		try {
-			//On cree l'utilisateur 
-			this.noteService.createUpdateView(currentNote);
-			//On recupere la liste en base
-		} catch (Exception e) {
-			System.err.println(e);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,e.getMessage(), null));
-			return DemoConstantes.MSG_KO;
-		}
+		this.noteService.createUpdateView(currentNote);
+//		try {
+//			//On cree l'utilisateur 
+//			this.noteService.createUpdateView(currentNote);
+//			//On recupere la liste en base
+//		} catch (Exception e) {
+//			System.err.println(e);
+//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,e.getMessage(), null));
+//			return DemoConstantes.MSG_KO;
+//		}
 		return DemoConstantes.MSG_OK;
 	}
 

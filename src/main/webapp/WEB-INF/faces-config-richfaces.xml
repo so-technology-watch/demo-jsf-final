@@ -43,6 +43,18 @@
 			<to-view-id>/views/richfaces/manageUser.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/richfaces/manageNote.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/richfaces/noteList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ERROR</from-outcome>
+			<to-view-id>/views/richfaces/manageNote.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<!-- Navigation pour l'affichage de la page d'inscription prechargee -->
 	<navigation-rule>
@@ -54,6 +66,19 @@
 		<navigation-case>
 			<from-outcome>create-user</from-outcome>
 			<to-view-id>/views/richfaces/manageUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+    <navigation-rule>
+		<from-view-id>/views/richfaces/noteList.xhtml</from-view-id>
+		<navigation-case>
+		    <from-action>#{noteManagedBean.loadNote(currentNote)}</from-action>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/richfaces/manageNote.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-note</from-outcome>
+			<to-view-id>/views/richfaces/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

@@ -32,7 +32,7 @@
 			<to-view-id>/views/default/login.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<!-- Navigation for creating a user -->
+	<!-- Navigation for creating/update a user/note -->
 	<navigation-rule>
 		<from-view-id>/views/default/manageUser.xhtml</from-view-id>
 		<navigation-case>
@@ -42,6 +42,18 @@
 		<navigation-case>
 			<from-outcome>ERROR</from-outcome>
 			<to-view-id>/views/default/manageUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/default/manageNote.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/default/noteList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ERROR</from-outcome>
+			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -55,6 +67,19 @@
 		<navigation-case>
 			<from-outcome>create-user</from-outcome>
 			<to-view-id>/views/default/manageUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/default/noteList.xhtml</from-view-id>
+		<navigation-case>
+		    <from-action>#{noteManagedBean.loadNote(currentNote)}</from-action>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-note</from-outcome>
+			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

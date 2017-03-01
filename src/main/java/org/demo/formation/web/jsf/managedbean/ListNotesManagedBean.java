@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 
 import org.demo.formation.librairie.bean.provider.FactoryServiceProvider;
+import org.demo.formation.librairie.entity.NoteId;
 import org.demo.formation.librairie.service.ICoursService;
 import org.demo.formation.librairie.service.IEleveService;
 import org.demo.formation.librairie.service.INoteService;
@@ -26,7 +27,11 @@ public class ListNotesManagedBean {
 	}
 	
 	public String deleteNote(NoteView noteViewToDelete){
-		return null;
+		NoteId noteId = new NoteId(noteViewToDelete.getIdCours(), noteViewToDelete.getIdEleve());
+		 this.noteService.deleteById(noteId);
+		 this.noteList = this.noteService.findAll();
+		return "";
+		
 	}
 
 	public String getStudentNameById(Long id){
