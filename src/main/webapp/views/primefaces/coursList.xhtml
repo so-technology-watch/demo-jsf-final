@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui">
+<ui:composition template="/views/primefaces/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<section class="container">
+			<div class="pages">
+				<h1>
+					<h:outputText value="#{msg.list_course_msg}" />
+					<h:link outcome="create-lesson">
+						<h:graphicImage width="30" value="../../img/carousel_plus.png"
+							title="#{msg.list_course_add_lesson}" />
+					</h:link>
+				</h1>
+				<div class="taches table-responsive">
+					<pf:dataTable id="userListDatatableId"
+						value="#{listCoursManagedBean.listeCours}" var="currentCourse"
+						styleClass="table table-bordered" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						<pf:column>
+							<!-- column header -->
+							<f:facet name="header">
+								<h:outputText value="#{msg.list_course_label}" />
+							</f:facet>
+			    				#{currentCourse.libelle}
+			    			</pf:column>
+						<pf:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.list_course_nbHour}" />
+							</f:facet>
+			    				#{currentCourse.nbHeures}
+			    			</pf:column>
+						<pf:column>
+							<f:facet name="header">Actions</f:facet>
+							<pf:link outcome="preload-lesson">
+								<f:param name="idCoursParam" value="#{currentCourse.idCours}" />
+								<pf:graphicImage width="30" value="../../img/btn_detail.png"
+									title="#{msg.list_users_disp_detail}" />
+							</pf:link>
+							<pf:commandButton
+								action="#{listCoursManagedBean.deleteCoursById(currentCourse.idCours)}"
+								update="userListDatatableId" icon="ui-icon-close"
+								onclick="return confirm('Etes vous certain de vouloir supprimer Cette entite ?');"
+								title="#{msg.list_course_delete_lesson}">
+							</pf:commandButton>
+						</pf:column>
+					</pf:dataTable>
+				</div>
+			</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -22,7 +22,7 @@ public class CoursRecord implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    //@NotNull
     private Integer idCours ; // Integer // Id or Primary Key
 
     @Size( max = 254 )

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Accueil</title>
+	<link rel="stylesheet" href="#{request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="#{request.contextPath}/css/styles.css" />
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="accueil text-left">
+			<h1><h:outputText value="#{msg.home_wel}"/> : ADMIN
+			 </h1>
+			<p><h:outputText value="#{msg.home_app_name}"/></p>
+			<p>
+				<ul>
+				  <li><h:link value="#{msg.list_users_msg}" outcome="show-students"/></li>
+				  <li><h:link value="#{msg.list_note_msg}" outcome="show-lessons"/></li>
+				  <li><h:link value="#{msg.list_course_msg}" outcome="show-results"/></li>
+				</ul>
+				
+			</p>
+		</div>
+	</div>
+
+</h:body>
+</html>
+

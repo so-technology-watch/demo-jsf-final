@@ -22,13 +22,12 @@
 	<h:form>
 		<header>
 		<div align="left">
-			<h:panelGroup rendered="#{userManagedBean.loginUser ne null}">
+			<h:panelGroup>
 				<h:outputText value="#{msg.home_wel}" />
-				<b>${userManagedBean.loginUser.nom}</b>
-				<h:commandLink action="#{loginBean.logoutAction()}">
-					<h:graphicImage width="30" value="../../img/btn_logout.jpg"
-						title="#{msg.logout}" />
-				</h:commandLink>
+				<h:link outcome="/views/index">
+						<h:graphicImage width="30" value="../../img/btn_home.jpg"
+							title="#{msg.home_app_msg}" />
+				</h:link>
 			</h:panelGroup>
 		</div>
 		<div align="right">

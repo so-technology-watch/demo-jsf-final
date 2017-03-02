@@ -32,7 +32,7 @@ public class NoteManagedBean {
 	private List<CoursRecord> coursList;
 	//Pour alimenter la liste des étudiants presents en base
 	private List<EleveRecord> studentList;
-	//Permettant de savoir si une Note est en mode I/U
+	//Permettant de savoir si une Note est en mode I/U (utile dans ce cas puisqu'on a une clé doublon)
 	private boolean updateMode;
 
 
@@ -50,7 +50,13 @@ public class NoteManagedBean {
 			if (this.updateMode){
 				this.noteService.update(currentNote);
 			}else {
-				this.noteService.create(currentNote);
+				NoteRecord noteRecordExistant = this.noteService.findById(currentNote.getIdCours(), currentNote.getIdEleve());
+				if (noteRecordExistant == null) { //On ne cree que s'il n'en existait déjà pas en base
+					this.noteService.create(currentNote);
+				}else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"UNE NOTE EXISTE DEJA POUR CE COURS ET CET ELEVE", null));
+					return DemoConstantes.MSG_KO;
+				}
 			}
 		} catch (Exception e) {
 			System.err.println(e);

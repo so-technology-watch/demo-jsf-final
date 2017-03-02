@@ -20,16 +20,20 @@
 
 	</application>
 
-	<!-- Navigation for the connection -->
+	<!-- Navigation in Home Page -->
 	<navigation-rule>
-		<from-view-id>/views/default/login.xhtml</from-view-id>
+		<from-view-id>/views/index.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>SUCCESS</from-outcome>
+			<from-outcome>show-students</from-outcome>
 			<to-view-id>/views/default/userList.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>ERROR</from-outcome>
-			<to-view-id>/views/default/login.xhtml</to-view-id>
+			<from-outcome>show-lessons</from-outcome>
+			<to-view-id>/views/default/coursList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>show-results</from-outcome>
+			<to-view-id>/views/default/noteList.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<!-- Navigation for creating/update a user/note -->
@@ -56,6 +60,19 @@
 			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/default/manageCours.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/default/coursList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ERROR</from-outcome>
+			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 
 	<!-- Navigation for displaying preloaded registration page -->
 	<navigation-rule>
@@ -80,6 +97,18 @@
 		<navigation-case>
 			<from-outcome>create-note</from-outcome>
 			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/default/coursList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>preload-lesson</from-outcome>
+			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-lesson</from-outcome>
+			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

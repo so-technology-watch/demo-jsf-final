@@ -19,16 +19,20 @@
 			<var>msg</var>
 		</resource-bundle>
 	</application>
-	<!-- Navigation pour la connexon -->
+	<!-- Navigation in Home Page -->
 	<navigation-rule>
-		<from-view-id>/views/primefaces/login.xhtml</from-view-id>
+		<from-view-id>/views/index.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>SUCCESS</from-outcome>
+			<from-outcome>show-students</from-outcome>
 			<to-view-id>/views/primefaces/userList.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>ERROR</from-outcome>
-			<to-view-id>/views/primefaces/login.xhtml</to-view-id>
+			<from-outcome>show-lessons</from-outcome>
+			<to-view-id>/views/primefaces/coursList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>show-results</from-outcome>
+			<to-view-id>/views/primefaces/noteList.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<!-- Navigation pour la creation d'un utilisateur -->
@@ -55,6 +59,18 @@
 			<to-view-id>/views/primefaces/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/primefaces/manageCours.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/primefaces/coursList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ERROR</from-outcome>
+			<to-view-id>/views/primefaces/manageCours.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<!-- Navigation pour l'affichage de la page d'inscription prechargee -->
 	<navigation-rule>
@@ -79,6 +95,18 @@
 		<navigation-case>
 			<from-outcome>create-note</from-outcome>
 			<to-view-id>/views/primefaces/manageNote.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/primefaces/coursList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>preload-lesson</from-outcome>
+			<to-view-id>/views/primefaces/manageCours.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-lesson</from-outcome>
+			<to-view-id>/views/primefaces/manageCours.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

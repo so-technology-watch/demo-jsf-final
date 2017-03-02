@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/views/default/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<section class="container">
+			<div class="pages">
+				<header>
+				<div align="left">
+					<h1>
+						<h:outputText value="#{msg.lesson_page_title}" />
+					</h1>
+				</div>
+				</header>
+				<div class="connexion">
+					<div class="form-group form-group-lg">
+						<h:inputText class="form-control no-border" id="lessonLabelId"
+							p:placeholder="Label"
+							value="#{coursManagedBean.currentCourse.libelle}" />
+						<h:message for="lessonLabelId" />
+					</div>
+					<div class="form-group form-group-lg">
+						<h:inputText class="form-control no-border" id="nbHourId"
+							p:placeholder="Nb Hour" value="#{coursManagedBean.currentCourse.nbHeures}" />
+						<h:message for="nbHourId" />
+					</div>
+					<br />
+					<h:inputHidden value="${coursManagedBean.currentCourse.idCours}" />
+					<h:commandButton
+						styleClass="btn btn-success no-border btn-lg btn-block"
+						value="Valider" action="#{coursManagedBean.addLessonAction}" />
+					<h:messages style="color:red;margin:8px;" globalOnly="true" />
+				</div>
+			</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

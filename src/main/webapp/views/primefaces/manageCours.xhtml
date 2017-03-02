@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui">
+<ui:composition template="/views/primefaces/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<section class="container">
+			<div class="pages">
+				<div class="connexion">
+					<div class="form-group form-group-lg">
+						<pf:inputText styleClass="form-control no-border" id="lessonLabelId"
+							placeholder="Label" required="true"
+							value="#{coursManagedBean.currentCourse.libelle}" />
+						<pf:message for="lessonLabelId" />
+					</div>
+					<div class="form-group form-group-lg">
+						<pf:inputText styleClass="form-control no-border" id="nbHourId"
+							placeholder="Nb Hour Of Lesson" required="true"
+							value="#{coursManagedBean.currentCourse.nbHeures}" />
+						<pf:message for="nbHourId" />
+					</div>
+					<br />
+					<pf:inputText type="hidden" value="${coursManagedBean.currentCourse.idCours}" />
+					<pf:commandButton
+						styleClass="btn btn-success no-border btn-lg btn-block"
+						value="Valider" action="#{coursManagedBean.addLessonAction}" />
+					<pf:messages style="color:red;margin:8px;" showDetail="true" autoUpdate="true" closable="true" />
+				</div>
+			</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

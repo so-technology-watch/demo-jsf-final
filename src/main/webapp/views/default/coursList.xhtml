@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/views/default/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<section class="container">
+			<div class="pages">
+				<header>
+				<div align="left">
+					<h1>
+						<h:outputText value="#{msg.list_course_msg}" />
+					</h1>
+				</div>
+				</header>
+				<div class="taches table-responsive">
+					<h:link outcome="create-lesson">
+						<h:graphicImage width="30" value="../../img/carousel_plus.png"
+							title="#{msg.list_course_add_lesson}" />
+					</h:link> 
+					<h:dataTable id="userListDatatableId"
+						value="#{listCoursManagedBean.listeCours}" var="currentCourse"
+						styleClass="table table-bordered" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						<h:column>
+							<!-- column header -->
+							<f:facet name="header">
+								<h:outputText value="#{msg.list_course_label}" />
+							</f:facet>
+		    				#{currentCourse.libelle}
+		    			</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.list_course_nbHour}" />
+							</f:facet>
+		    				#{currentCourse.nbHeures}
+		    			</h:column>
+						<h:column>
+							<f:facet name="header">Actions</f:facet>
+							<!-- Lien pour l'affichage du detail -->
+							<h:link outcome="preload-lesson">
+								<f:param name="idCoursParam" value="#{currentCourse.idCours}" />
+								<h:graphicImage width="30" value="../../img/btn_detail.png"
+									title="#{msg.list_users_disp_detail}" />
+							</h:link>
+							<!-- Lien pour l'affichage du bouton de suppression -->
+							<h:commandLink
+								action="#{listCoursManagedBean.deleteCoursById(currentCourse.idCours)}"
+								onclick="return confirm('Etes vous certain de vouloir supprimer Cette entite ?');">
+								<f:ajax render="userListDatatableId" />
+								<h:graphicImage width="30" value="../../img/btn_delete.jpg"
+									title="#{msg.list_course_delete_lesson}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
