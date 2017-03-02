@@ -2,65 +2,66 @@ package org.demo.formation.web.jsf.managedbean;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
-import org.demo.formation.librairie.bean.provider.FactoryServiceProvider;
-import org.demo.formation.librairie.service.ICoursService;
-import org.demo.formation.librairie.service.IEleveService;
-import org.demo.formation.librairie.service.INoteService;
-import org.demo.formation.librairie.service.impl.CoursServiceImpl;
-import org.demo.formation.librairie.service.impl.EleveServiceImpl;
-import org.demo.formation.librairie.service.impl.NoteServiceImpl;
-import org.demo.formation.librairie.service.view.CoursView;
-import org.demo.formation.librairie.service.view.EleveView;
-import org.demo.formation.librairie.service.view.NoteView;
-import org.demo.formation.librairie.util.MentionEnum;
+import org.demo.data.record.CoursRecord;
+import org.demo.data.record.EleveRecord;
+import org.demo.data.record.NoteRecord;
 import org.demo.formation.web.jsf.util.DemoConstantes;
+import org.demo.formation.web.jsf.util.MentionEnum;
 import org.demo.formation.web.jsf.util.SessionManagerUtils;
+import org.demo.persistence.CoursPersistence;
+import org.demo.persistence.ElevePersistence;
+import org.demo.persistence.NotePersistence;
+import org.demo.persistence.commons.PersistenceServiceProvider;
 
 @ManagedBean(name = "noteManagedBean")
 @RequestScoped
 public class NoteManagedBean {
 	//Note courante
-	private NoteView currentNote;
+	private NoteRecord currentNote;
 	//Liste des services d'accès à la couche métier
-	private INoteService noteService = FactoryServiceProvider.getService(NoteServiceImpl.class);
-	private ICoursService coursService = FactoryServiceProvider.getService(CoursServiceImpl.class);
-	private IEleveService eleveService = FactoryServiceProvider.getService(EleveServiceImpl.class);
-	private EleveView loginUser;
+	private ElevePersistence userService = PersistenceServiceProvider.getService(ElevePersistence.class);
+	private CoursPersistence coursService = PersistenceServiceProvider.getService(CoursPersistence.class);
+	private NotePersistence noteService = PersistenceServiceProvider.getService(NotePersistence.class);
+	private EleveRecord loginUser;
 	//Pour afficher la liste des cours
-	private List<CoursView> coursList;
+	private List<CoursRecord> coursList;
 	//Pour alimenter la liste des étudiants presents en base
-	private List<EleveView> studentList;
+	private List<EleveRecord> studentList;
 	//Permettant de savoir si une Note est en mode I/U
 	private boolean updateMode;
-	
-	
+
+
 	public NoteManagedBean(){
-		this.currentNote = new NoteView();
-		this.loginUser = (EleveView)SessionManagerUtils.getObjectInSession(DemoConstantes.USER_SESSION_KEY);
+		this.currentNote = new NoteRecord();
+		this.loginUser = (EleveRecord)SessionManagerUtils.getObjectInSession(DemoConstantes.USER_SESSION_KEY);
 		this.coursList = this.coursService.findAll();
-		this.studentList = this.eleveService.findAll();
+		this.studentList = this.userService.findAll();
 	}
 
 
 	public String addNoteAction(){
-		this.noteService.createUpdateView(currentNote);
-//		try {
-//			//On cree l'utilisateur 
-//			this.noteService.createUpdateView(currentNote);
-//			//On recupere la liste en base
-//		} catch (Exception e) {
-//			System.err.println(e);
-//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,e.getMessage(), null));
-//			return DemoConstantes.MSG_KO;
-//		}
+		try {
+			//On cree l'utilisateur 
+			if (this.updateMode){
+				this.noteService.update(currentNote);
+			}else {
+				this.noteService.create(currentNote);
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,e.getMessage(), null));
+			return DemoConstantes.MSG_KO;
+		}
 		return DemoConstantes.MSG_OK;
 	}
 
-	public String loadNote(NoteView noteViewToLoad){
-		this.currentNote = noteViewToLoad;
+	public String loadNote(NoteRecord noteRecordToLoad){
+		this.currentNote = noteRecordToLoad;
 		this.updateMode = true;
 		return DemoConstantes.MSG_OK;
 	}
@@ -69,43 +70,35 @@ public class NoteManagedBean {
 		return MentionEnum.values();
 	}
 
-	public NoteView getCurrentNote() {
+	public NoteRecord getCurrentNote() {
 		return currentNote;
 	}
 
-	public void setCurrentNote(NoteView currentNote) {
+	public void setCurrentNote(NoteRecord currentNote) {
 		this.currentNote = currentNote;
 	}
 
-	public INoteService getNoteService() {
-		return noteService;
-	}
-
-	public void setNoteService(INoteService noteService) {
-		this.noteService = noteService;
-	}
-
-	public EleveView getLoginUser() {
+	public EleveRecord getLoginUser() {
 		return loginUser;
 	}
 
-	public void setLoginUser(EleveView loginUser) {
+	public void setLoginUser(EleveRecord loginUser) {
 		this.loginUser = loginUser;
 	}
 
-	public List<CoursView> getCoursList() {
+	public List<CoursRecord> getCoursList() {
 		return coursList;
 	}
 
-	public void setCoursList(List<CoursView> coursList) {
+	public void setCoursList(List<CoursRecord> coursList) {
 		this.coursList = coursList;
 	}
 
-	public List<EleveView> getStudentList() {
+	public List<EleveRecord> getStudentList() {
 		return studentList;
 	}
 
-	public void setStudentList(List<EleveView> studentList) {
+	public void setStudentList(List<EleveRecord> studentList) {
 		this.studentList = studentList;
 	}
 

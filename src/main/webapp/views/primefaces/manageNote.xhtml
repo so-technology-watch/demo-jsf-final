@@ -53,6 +53,7 @@
 						</h:selectOneMenu>
 					</div>
 					<br />
+					<h:inputHidden value="${noteManagedBean.updateMode}"/>
 					<pf:commandButton onclick="document.getElementById('managedNoteFormId:studentCompId').disabled=false;document.getElementById('managedNoteFormId:courseCompId').disabled=false; return true;"
 						styleClass="btn btn-success no-border btn-lg btn-block"
 						value="Valider" action="#{noteManagedBean.addNoteAction}" /> 

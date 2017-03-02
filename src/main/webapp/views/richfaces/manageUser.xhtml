@@ -10,8 +10,8 @@
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:a4j="http://richfaces.org/a4j">
 <ui:composition template="/views/richfaces/template.xhtml">
-
 	<ui:define name="body">
+	 <f:view>
 		<h:form>
 			<section class="container">
 			<div class="pages">
@@ -67,14 +67,15 @@
 					</div>
 					<br />
 					<h:inputHidden value="${userManagedBean.userCourant.idEleve}" />
-					<h:commandButton
-						styleClass="btn btn-success no-border btn-lg btn-block"
-						value="Valider" action="#{userManagedBean.addUserAction}" />
+					<h:commandButton styleClass="btn btn-success no-border btn-lg btn-block"
+						value="Valider" action="#{userManagedBean.addUserAction}" >
+					</h:commandButton>
 					<rich:messages style="color:red;margin:8px;" globalOnly="true" />
 				</div>
 			</div>
 			</section>
 		</h:form>
+		</f:view>
 	</ui:define>
 </ui:composition>
 </html>

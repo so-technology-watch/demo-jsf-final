@@ -7,10 +7,12 @@
 package org.demo.data.record;
 
 import java.io.Serializable;
-import javax.validation.constraints.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import org.demo.formation.web.jsf.util.MentionEnum;
 
 /**
  * Java bean for entity "note" <br>
@@ -151,7 +153,9 @@ public class NoteRecord implements Serializable
         sb.append(codeMention);
         return sb.toString(); 
     } 
-
+    public String getLibMention() {
+		return MentionEnum.getLibByCodeMention(this.codeMention);
+	}
 
 
 }

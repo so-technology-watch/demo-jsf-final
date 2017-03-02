@@ -67,10 +67,10 @@ public class DataSourceProvider {
 
 		// Apache DBCP BasicDataSource
 		BasicDataSource datasource = new BasicDataSource();
-		datasource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-		datasource.setUrl(env.getProperty("jdbc.url"));
-		datasource.setUsername(env.getProperty("jdbc.username"));
-		datasource.setPassword(env.getProperty("jdbc.password"));
+		datasource.setDriverClassName(env.getProperty("jdbc.driverClassName").trim());
+		datasource.setUrl(env.getProperty("jdbc.url").trim());
+		datasource.setUsername(env.getProperty("jdbc.username").trim());
+		datasource.setPassword(env.getProperty("jdbc.password").trim());
 		return datasource ;
 	}
 

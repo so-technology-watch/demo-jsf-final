@@ -7,9 +7,12 @@
 package org.demo.data.record;
 
 import java.io.Serializable;
-import javax.validation.constraints.*;
-
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.demo.formation.web.jsf.util.DepartementEnum;
 
 /**
  * Java bean for entity "eleve" <br>
@@ -23,7 +26,7 @@ public class EleveRecord implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    //@NotNull
     private Integer idEleve ; // Integer // Id or Primary Key
 
     @NotNull
@@ -238,6 +241,8 @@ public class EleveRecord implements Serializable
         return sb.toString(); 
     } 
 
-
+    public String getLibDepartement(){
+		return DepartementEnum.getLibByCodeDepartement(this.codeDepartement);
+	}
 
 }

@@ -5,6 +5,7 @@
 
 package org.demo.persistence.impl.jdbc;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,12 @@ import org.demo.persistence.impl.jdbc.commons.GenericDAO;
  *
  */
 @Named("ElevePersistence")
-public class ElevePersistenceJdbc extends GenericDAO<EleveRecord> implements ElevePersistence {
+public class ElevePersistenceJdbc extends GenericDAO<EleveRecord> implements ElevePersistence,Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4654487307110952876L;
 
 	private final static String SQL_SELECT_ALL = 
 		"select ID_ELEVE, NOM, PRENOM, EMAIL, PASSWORD, CODE_POSTAL, CODE_DEPARTEMENT, SEXE, DATE_INSCRIPTION from eleve"; 

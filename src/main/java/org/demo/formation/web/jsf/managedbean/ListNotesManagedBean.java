@@ -4,48 +4,42 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
-import org.demo.formation.librairie.bean.provider.FactoryServiceProvider;
-import org.demo.formation.librairie.entity.NoteId;
-import org.demo.formation.librairie.service.ICoursService;
-import org.demo.formation.librairie.service.IEleveService;
-import org.demo.formation.librairie.service.INoteService;
-import org.demo.formation.librairie.service.impl.CoursServiceImpl;
-import org.demo.formation.librairie.service.impl.EleveServiceImpl;
-import org.demo.formation.librairie.service.impl.NoteServiceImpl;
-import org.demo.formation.librairie.service.view.NoteView;
+import org.demo.data.record.NoteRecord;
+import org.demo.persistence.CoursPersistence;
+import org.demo.persistence.ElevePersistence;
+import org.demo.persistence.NotePersistence;
+import org.demo.persistence.commons.PersistenceServiceProvider;
 
 @ManagedBean(name= "listNoteManagedBean")
 public class ListNotesManagedBean {
 
-	private INoteService noteService = FactoryServiceProvider.getService(NoteServiceImpl.class);
-	private ICoursService coursService = FactoryServiceProvider.getService(CoursServiceImpl.class);
-	private IEleveService eleveService = FactoryServiceProvider.getService(EleveServiceImpl.class);
-	private List<NoteView> noteList;
+	private List<NoteRecord> noteList;
+	private ElevePersistence userService = PersistenceServiceProvider.getService(ElevePersistence.class);
+	private CoursPersistence coursService = PersistenceServiceProvider.getService(CoursPersistence.class);
+	private NotePersistence noteService = PersistenceServiceProvider.getService(NotePersistence.class);
 	
 	public ListNotesManagedBean(){
 		this.noteList = this.noteService.findAll();
 	}
 	
-	public String deleteNote(NoteView noteViewToDelete){
-		NoteId noteId = new NoteId(noteViewToDelete.getIdCours(), noteViewToDelete.getIdEleve());
-		 this.noteService.deleteById(noteId);
+	public String deleteNote(NoteRecord noteToDelete){
+		 this.noteService.deleteById(noteToDelete.getIdCours(), noteToDelete.getIdEleve());
 		 this.noteList = this.noteService.findAll();
 		return "";
-		
 	}
 
-	public String getStudentNameById(Long id){
-		return this.eleveService.getViewById(id).getNom();
+	public String getStudentNameById(Integer id){
+		return this.userService.findById(id).getNom();
 	}
 	
-	public String getCourseNameById(Long id){
-		return this.coursService.getViewById(id).getLibelle();
+	public String getCourseNameById(Integer id){
+		return this.coursService.findById(id).getLibelle();
 	}
-	public List<NoteView> getNoteList() {
+	public List<NoteRecord> getNoteList() {
 		return noteList;
 	}
 
-	public void setNoteList(List<NoteView> noteList) {
+	public void setNoteList(List<NoteRecord> noteList) {
 		this.noteList = noteList;
 	}
 }
