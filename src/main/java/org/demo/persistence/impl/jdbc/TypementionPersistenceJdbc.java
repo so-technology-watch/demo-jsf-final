@@ -13,103 +13,99 @@ import java.util.List;
 import javax.inject.Named;
 
 
-import org.demo.data.record.CoursRecord ;
-import org.demo.persistence.CoursPersistence;
+import org.demo.data.record.TypementionRecord ;
+import org.demo.persistence.TypementionPersistence;
 import org.demo.persistence.impl.jdbc.commons.GenericDAO;
 
 /**
- * Cours persistence implementation 
+ * Typemention persistence implementation 
  * 
  * @author Telosys
  *
  */
-@Named("CoursPersistence")
-public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements CoursPersistence {
+@Named("TypementionPersistence")
+public class TypementionPersistenceJdbc extends GenericDAO<TypementionRecord> implements TypementionPersistence {
 
 	private final static String SQL_SELECT_ALL = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours"; 
+		"select ID_MENTION, LABEL_MENTION from typemention"; 
 
 	private final static String SQL_SELECT = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours where ID_COURS = ?";
+		"select ID_MENTION, LABEL_MENTION from typemention where ID_MENTION = ?";
 
 	private final static String SQL_INSERT = 
-		"insert into cours ( ID_COURS, LIBELLE, NB_HEURES ) values ( ?, ?, ? )";
+		"insert into typemention ( ID_MENTION, LABEL_MENTION ) values ( ?, ? )";
 
 	private final static String SQL_UPDATE = 
-		"update cours set LIBELLE = ?, NB_HEURES = ? where ID_COURS = ?";
+		"update typemention set LABEL_MENTION = ? where ID_MENTION = ?";
 
 	private final static String SQL_DELETE = 
-		"delete from cours where ID_COURS = ?";
+		"delete from typemention where ID_MENTION = ?";
 
 	private final static String SQL_COUNT_ALL = 
-		"select count(*) from cours";
+		"select count(*) from typemention";
 
 	private final static String SQL_COUNT = 
-		"select count(*) from cours where ID_COURS = ?";
+		"select count(*) from typemention where ID_MENTION = ?";
 
     //----------------------------------------------------------------------
 	/**
 	 * DAO constructor
 	 */
-	public CoursPersistenceJdbc() {
+	public TypementionPersistenceJdbc() {
 		super();
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, TypementionRecord typemention) throws SQLException {
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, typemention.getIdMention() ) ; // "ID_MENTION" : java.lang.Integer
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForInsert(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForInsert(PreparedStatement ps, int i, TypementionRecord typemention) throws SQLException {
 		//--- Set PRIMARY KEY and DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, typemention.getIdMention() ) ; // "ID_MENTION" : java.lang.Integer
+		setValue(ps, i++, typemention.getLabelMention() ) ; // "LABEL_MENTION" : java.lang.String
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForUpdate(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForUpdate(PreparedStatement ps, int i, TypementionRecord typemention) throws SQLException {
 		//--- Set DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, typemention.getLabelMention() ) ; // "LABEL_MENTION" : java.lang.String
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, typemention.getIdMention() ) ; // "ID_MENTION" : java.lang.Integer
 	}
 
 	//----------------------------------------------------------------------
 	/**
 	 * Creates a new instance of the bean and populates it with the given primary value(s)
-	 * @param idCours;
+	 * @param idMention;
 	 * @return the new instance
 	 */
-	private CoursRecord newInstanceWithPrimaryKey( Integer idCours ) {
-		CoursRecord cours = new CoursRecord();
-		cours.setIdCours( idCours );
-		return cours ;
+	private TypementionRecord newInstanceWithPrimaryKey( Integer idMention ) {
+		TypementionRecord typemention = new TypementionRecord();
+		typemention.setIdMention( idMention );
+		return typemention ;
 	}
 
 	//----------------------------------------------------------------------
 	@Override
-	protected CoursRecord newInstance() {
-		return new CoursRecord() ;
+	protected TypementionRecord newInstance() {
+		return new TypementionRecord() ;
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected CoursRecord populateBean(ResultSet rs, CoursRecord cours) throws SQLException {
+	protected TypementionRecord populateBean(ResultSet rs, TypementionRecord typemention) throws SQLException {
 
 		//--- Set data from ResultSet to Bean attributes
-		cours.setIdCours(rs.getInt("ID_COURS")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setIdCours(null); }; // not primitive number => keep null value if any
-		cours.setLibelle(rs.getString("LIBELLE")); // java.lang.String
-		cours.setNbHeures(rs.getInt("NB_HEURES")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setNbHeures(null); }; // not primitive number => keep null value if any
-		return cours ;
+		typemention.setIdMention(rs.getInt("ID_MENTION")); // java.lang.Integer
+		if ( rs.wasNull() ) { typemention.setIdMention(null); }; // not primitive number => keep null value if any
+		typemention.setLabelMention(rs.getString("LABEL_MENTION")); // java.lang.String
+		return typemention ;
 	}
 
 	//----------------------------------------------------------------------
@@ -117,10 +113,10 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord findById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		if ( super.doSelect(cours) ) {
-			return cours ;
+	public TypementionRecord findById( Integer idMention ) {
+		TypementionRecord typemention = newInstanceWithPrimaryKey( idMention ) ;
+		if ( super.doSelect(typemention) ) {
+			return typemention ;
 		}
 		else {
 			return null ; // Not found
@@ -131,7 +127,7 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public List<CoursRecord> findAll() {
+	public List<TypementionRecord> findAll() {
 		return super.doSelectAll();
 	}
 
@@ -140,21 +136,21 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * Loads the given bean, it is supposed to contains the primary key value(s) in its attribute(s)<br>
 	 * If found, the given instance is populated with the values retrieved from the database<br>
 	 * If not found, the given instance remains unchanged
-	 * @param cours
+	 * @param typemention
 	 * @return true if found, false if not found
 	 */
 	//@Override
-	public boolean load( CoursRecord cours ) {
-		return super.doSelect(cours) ;
+	public boolean load( TypementionRecord typemention ) {
+		return super.doSelect(typemention) ;
 	}
 
     //----------------------------------------------------------------------
 	/**
 	 * Inserts the given bean in the database 
-	 * @param cours
+	 * @param typemention
 	 */
-	public long insert(CoursRecord cours) {
-		super.doInsert(cours);
+	public long insert(TypementionRecord typemention) {
+		super.doInsert(typemention);
 		return 0L ;
 	}
 
@@ -163,9 +159,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord create(CoursRecord cours) {
-		insert(cours);
-		return cours ;
+	public TypementionRecord create(TypementionRecord typemention) {
+		insert(typemention);
+		return typemention ;
 	}	
 
     //----------------------------------------------------------------------
@@ -173,8 +169,8 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean update(CoursRecord cours) {
-		int r = super.doUpdate(cours);
+	public boolean update(TypementionRecord typemention) {
+		int r = super.doUpdate(typemention);
 		return r > 0 ;
 
 	}	
@@ -184,14 +180,14 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord save(CoursRecord cours) {
-		if ( super.doExists(cours) ) {
-			super.doUpdate(cours);
+	public TypementionRecord save(TypementionRecord typemention) {
+		if ( super.doExists(typemention) ) {
+			super.doUpdate(typemention);
 		}
 		else {
-			super.doInsert(cours);
+			super.doInsert(typemention);
 		}
-		return cours ;
+		return typemention ;
 	}	
 
     //----------------------------------------------------------------------
@@ -199,9 +195,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean deleteById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		int r = super.doDelete(cours);
+	public boolean deleteById( Integer idMention ) {
+		TypementionRecord typemention = newInstanceWithPrimaryKey( idMention ) ;
+		int r = super.doDelete(typemention);
 		return r > 0 ;
 	}
 
@@ -210,31 +206,31 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean delete( CoursRecord cours ) {
-		int r = super.doDelete(cours);
+	public boolean delete( TypementionRecord typemention ) {
+		int r = super.doDelete(typemention);
 		return r > 0 ;
 	}
 
     //----------------------------------------------------------------------
 	/**
 	 * Checks the existence of a record in the database using the given primary key value(s)
-	 * @param idCours;
+	 * @param idMention;
 	 * @return
 	 */
 	// @Override
-	public boolean exists( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		return super.doExists(cours);
+	public boolean exists( Integer idMention ) {
+		TypementionRecord typemention = newInstanceWithPrimaryKey( idMention ) ;
+		return super.doExists(typemention);
 	}
     //----------------------------------------------------------------------
 	/**
 	 * Checks the existence of the given bean in the database 
-	 * @param cours
+	 * @param typemention
 	 * @return
 	 */
 	// @Override
-	public boolean exists( CoursRecord cours ) {
-		return super.doExists(cours);
+	public boolean exists( TypementionRecord typemention ) {
+		return super.doExists(typemention);
 	}
 
     //----------------------------------------------------------------------

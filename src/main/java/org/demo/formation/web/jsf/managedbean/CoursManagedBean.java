@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.demo.data.record.CoursRecord;
 import org.demo.data.record.EleveRecord;
 import org.demo.formation.web.jsf.util.DemoConstantes;
-import org.demo.formation.web.jsf.util.DepartementEnum;
 import org.demo.formation.web.jsf.util.SessionManagerUtils;
 import org.demo.persistence.CoursPersistence;
 import org.demo.persistence.commons.PersistenceServiceProvider;
@@ -64,10 +63,6 @@ public class CoursManagedBean implements Serializable{
 			this.currentCourse = this.coursService.findById(idCours);
 		}
 		return DemoConstantes.MSG_OK;
-	}
-
-	public DepartementEnum[] getDepartements() {
-		return DepartementEnum.values();
 	}
 
 	public EleveRecord getLoginUser() {

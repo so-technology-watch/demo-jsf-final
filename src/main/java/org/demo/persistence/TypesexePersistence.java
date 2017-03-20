@@ -6,25 +6,25 @@ package org.demo.persistence;
 
 import java.util.List;
 
-import org.demo.data.record.CoursRecord;
+import org.demo.data.record.TypesexeRecord;
 
 /**
- * Persistence Interface for CoursRecord.
+ * Persistence Interface for TypesexeRecord.
  */
-public interface CoursPersistence { 
+public interface TypesexePersistence { 
 
 	/**
 	 * Tries to find an entity using its Id / Primary Key
-	 * @param idCours
+	 * @param idSexe
 	 * @return entity
 	 */
-	CoursRecord findById( Integer idCours  ) ;
+	TypesexeRecord findById( Integer idSexe  ) ;
 
 	/**
 	 * Finds all entities.
 	 * @return all entities
 	 */
-	List<CoursRecord> findAll();
+	List<TypesexeRecord> findAll();
 
 	/**
 	 * Counts all the records present in the database
@@ -38,48 +38,48 @@ public interface CoursPersistence {
 	 * @param entity
 	 * @return entity
 	 */
-	CoursRecord save(CoursRecord entity);
+	TypesexeRecord save(TypesexeRecord entity);
 
 	/**
 	 * Updates the given entity in the database
 	 * @param entity
 	 * @return true if the entity has been updated, false if not found and not updated
 	 */
-	boolean update(CoursRecord entity);
+	boolean update(TypesexeRecord entity);
 
 	/**
 	 * Creates the given entity in the database
 	 * @param entity
 	 * @return
 	 */
-	CoursRecord create(CoursRecord entity);
+	TypesexeRecord create(TypesexeRecord entity);
 
 	/**
 	 * Deletes an entity using its Id / Primary Key
-	 * @param idCours
+	 * @param idSexe
 	 * @return true if the entity has been deleted, false if not found and not deleted
 	 */
-	boolean deleteById( Integer idCours );
+	boolean deleteById( Integer idSexe );
 
 	/**
 	 * Deletes an entity using the Id / Primary Key stored in the given object
 	 * @param the entity to be deleted (supposed to have a valid Id/PK )
 	 * @return true if the entity has been deleted, false if not found and not deleted
 	 */
-	boolean delete( CoursRecord entity );
+	boolean delete( TypesexeRecord entity );
 
 	/**
 	 * Returns true if an entity exists with the given Id / Primary Key 
-	 * @param idCours
+	 * @param idSexe
 	 * @return
 	 */
-	public boolean exists( Integer idCours ) ;
+	public boolean exists( Integer idSexe ) ;
 
 	/**
 	 * Returns true if the given entity exists
 	 * @param entity
 	 * @return
 	 */
-	public boolean exists( CoursRecord entity ) ;
+	public boolean exists( TypesexeRecord entity ) ;
 
 }

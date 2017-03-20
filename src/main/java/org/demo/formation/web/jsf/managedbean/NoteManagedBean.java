@@ -11,7 +11,6 @@ import org.demo.data.record.CoursRecord;
 import org.demo.data.record.EleveRecord;
 import org.demo.data.record.NoteRecord;
 import org.demo.formation.web.jsf.util.DemoConstantes;
-import org.demo.formation.web.jsf.util.MentionEnum;
 import org.demo.formation.web.jsf.util.SessionManagerUtils;
 import org.demo.persistence.CoursPersistence;
 import org.demo.persistence.ElevePersistence;
@@ -70,10 +69,6 @@ public class NoteManagedBean {
 		this.currentNote = noteRecordToLoad;
 		this.updateMode = true;
 		return DemoConstantes.MSG_OK;
-	}
-
-	public MentionEnum[] getMentions() {
-		return MentionEnum.values();
 	}
 
 	public NoteRecord getCurrentNote() {

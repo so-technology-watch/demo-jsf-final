@@ -4,32 +4,39 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	
+
 <f:view locale="#{languageManagedBean.locale}" />
 
 <h:head>
 	<meta charset="UTF-8" />
-	<title>#{msg.home_app_name}</title>
-	<link rel="stylesheet"
-		href="#{request.contextPath}/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="#{request.contextPath}/css/styles.css" />
-	<h:link outcome="/views/index">
-						<h:graphicImage width="30" value="../../img/btn_home.jpg"
-							title="#{msg.home_app_msg}" />
-	</h:link>
+	<title>#{msg.app_name}</title>
+	<h:outputStylesheet library="webjars"
+		name="bootstrap/3.3.7-1/css/bootstrap.min-jsf.css" />
+	<h:outputScript library="webjars" name="jquery/1.11.1/jquery.js" />
 </h:head>
 
 <h:body>
 	<h:form>
-		<header>
-		<div align="right">
-			<h:selectOneMenu value="#{languageManagedBean.localeCode}"
-				onchange="submit()"
-				valueChangeListener="#{languageManagedBean.countryLocaleCodeChanged}">
-				<f:selectItems value="#{languageManagedBean.countriesInMap}" />
-			</h:selectOneMenu>
-		</div>
-		</header>
+		<table class="table table-striped">
+			<tr>
+				<td><h:link outcome="/views/index">
+						<div class="btn-lg">
+							<span class="glyphicon glyphicon-home" />
+							<h:outputText value=" #{msg.home_back}" />
+						</div>
+					</h:link></td>
+				<td>
+					<div align="right">
+						<h:outputText value="#{msg.language}: " />
+						<h:selectOneMenu value="#{languageManagedBean.localeCode}"
+							onchange="submit()"
+							valueChangeListener="#{languageManagedBean.countryLocaleCodeChanged}">
+							<f:selectItems value="#{languageManagedBean.countriesInMap}" />
+						</h:selectOneMenu>
+					</div>
+				</td>
+			</tr>
+		</table>
 	</h:form>
 
 	<ui:insert name="body">

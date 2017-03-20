@@ -10,25 +10,24 @@ import org.demo.formation.web.jsf.util.SessionManagerUtils;
 import org.demo.persistence.ElevePersistence;
 import org.demo.persistence.commons.PersistenceServiceProvider;
 
-@ManagedBean(name= "listUserManagedBean")
+@ManagedBean(name = "listUserManagedBean")
 public class ListUserManagedBean {
 
-private ElevePersistence userService = PersistenceServiceProvider.getService(ElevePersistence.class);
+	private ElevePersistence userService = PersistenceServiceProvider.getService(ElevePersistence.class);
 
-private List<EleveRecord> listeUsers;
-private EleveRecord loginUser;
-	
-	
-	public ListUserManagedBean(){
-		//On recupere la liste en base
+	private List<EleveRecord> listeUsers;
+	private EleveRecord loginUser;
+
+	public ListUserManagedBean() {
+		// On recupere la liste en base
 		this.listeUsers = this.userService.findAll();
-        loginUser = (EleveRecord)SessionManagerUtils.getObjectInSession(DemoConstantes.USER_SESSION_KEY);
+		loginUser = (EleveRecord) SessionManagerUtils.getObjectInSession(DemoConstantes.USER_SESSION_KEY);
 	}
 
-	public String deleteUserById(Integer idUser){
-		if (idUser != null){
+	public String deleteUserById(Integer idUser) {
+		if (idUser != null) {
 			this.userService.deleteById(idUser);
-			this.listeUsers = this.userService.findAll();
+			return "user-list";
 		}
 		return "";
 	}
@@ -37,16 +36,13 @@ private EleveRecord loginUser;
 		return listeUsers;
 	}
 
-
 	public void setListeUsers(List<EleveRecord> listeUsers) {
 		this.listeUsers = listeUsers;
 	}
 
-
 	public EleveRecord getLoginUser() {
 		return loginUser;
 	}
-
 
 	public void setLoginUser(EleveRecord loginUser) {
 		this.loginUser = loginUser;

@@ -13,103 +13,99 @@ import java.util.List;
 import javax.inject.Named;
 
 
-import org.demo.data.record.CoursRecord ;
-import org.demo.persistence.CoursPersistence;
+import org.demo.data.record.TypesexeRecord ;
+import org.demo.persistence.TypesexePersistence;
 import org.demo.persistence.impl.jdbc.commons.GenericDAO;
 
 /**
- * Cours persistence implementation 
+ * Typesexe persistence implementation 
  * 
  * @author Telosys
  *
  */
-@Named("CoursPersistence")
-public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements CoursPersistence {
+@Named("TypesexePersistence")
+public class TypesexePersistenceJdbc extends GenericDAO<TypesexeRecord> implements TypesexePersistence {
 
 	private final static String SQL_SELECT_ALL = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours"; 
+		"select ID_SEXE, LABEL_SEXE from typesexe"; 
 
 	private final static String SQL_SELECT = 
-		"select ID_COURS, LIBELLE, NB_HEURES from cours where ID_COURS = ?";
+		"select ID_SEXE, LABEL_SEXE from typesexe where ID_SEXE = ?";
 
 	private final static String SQL_INSERT = 
-		"insert into cours ( ID_COURS, LIBELLE, NB_HEURES ) values ( ?, ?, ? )";
+		"insert into typesexe ( ID_SEXE, LABEL_SEXE ) values ( ?, ? )";
 
 	private final static String SQL_UPDATE = 
-		"update cours set LIBELLE = ?, NB_HEURES = ? where ID_COURS = ?";
+		"update typesexe set LABEL_SEXE = ? where ID_SEXE = ?";
 
 	private final static String SQL_DELETE = 
-		"delete from cours where ID_COURS = ?";
+		"delete from typesexe where ID_SEXE = ?";
 
 	private final static String SQL_COUNT_ALL = 
-		"select count(*) from cours";
+		"select count(*) from typesexe";
 
 	private final static String SQL_COUNT = 
-		"select count(*) from cours where ID_COURS = ?";
+		"select count(*) from typesexe where ID_SEXE = ?";
 
     //----------------------------------------------------------------------
 	/**
 	 * DAO constructor
 	 */
-	public CoursPersistenceJdbc() {
+	public TypesexePersistenceJdbc() {
 		super();
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForPrimaryKey(PreparedStatement ps, int i, TypesexeRecord typesexe) throws SQLException {
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, typesexe.getIdSexe() ) ; // "ID_SEXE" : java.lang.Integer
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForInsert(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForInsert(PreparedStatement ps, int i, TypesexeRecord typesexe) throws SQLException {
 		//--- Set PRIMARY KEY and DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, typesexe.getIdSexe() ) ; // "ID_SEXE" : java.lang.Integer
+		setValue(ps, i++, typesexe.getLabelSexe() ) ; // "LABEL_SEXE" : java.lang.String
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected void setValuesForUpdate(PreparedStatement ps, int i, CoursRecord cours) throws SQLException {
+	protected void setValuesForUpdate(PreparedStatement ps, int i, TypesexeRecord typesexe) throws SQLException {
 		//--- Set DATA from bean to PreparedStatement ( SQL "SET x=?, y=?, ..." )
-		setValue(ps, i++, cours.getLibelle() ) ; // "LIBELLE" : java.lang.String
-		setValue(ps, i++, cours.getNbHeures() ) ; // "NB_HEURES" : java.lang.Integer
+		setValue(ps, i++, typesexe.getLabelSexe() ) ; // "LABEL_SEXE" : java.lang.String
 		//--- Set PRIMARY KEY from bean to PreparedStatement ( SQL "WHERE key=?, ..." )
-		setValue(ps, i++, cours.getIdCours() ) ; // "ID_COURS" : java.lang.Integer
+		setValue(ps, i++, typesexe.getIdSexe() ) ; // "ID_SEXE" : java.lang.Integer
 	}
 
 	//----------------------------------------------------------------------
 	/**
 	 * Creates a new instance of the bean and populates it with the given primary value(s)
-	 * @param idCours;
+	 * @param idSexe;
 	 * @return the new instance
 	 */
-	private CoursRecord newInstanceWithPrimaryKey( Integer idCours ) {
-		CoursRecord cours = new CoursRecord();
-		cours.setIdCours( idCours );
-		return cours ;
+	private TypesexeRecord newInstanceWithPrimaryKey( Integer idSexe ) {
+		TypesexeRecord typesexe = new TypesexeRecord();
+		typesexe.setIdSexe( idSexe );
+		return typesexe ;
 	}
 
 	//----------------------------------------------------------------------
 	@Override
-	protected CoursRecord newInstance() {
-		return new CoursRecord() ;
+	protected TypesexeRecord newInstance() {
+		return new TypesexeRecord() ;
 	}
 
     //----------------------------------------------------------------------
 	@Override
-	protected CoursRecord populateBean(ResultSet rs, CoursRecord cours) throws SQLException {
+	protected TypesexeRecord populateBean(ResultSet rs, TypesexeRecord typesexe) throws SQLException {
 
 		//--- Set data from ResultSet to Bean attributes
-		cours.setIdCours(rs.getInt("ID_COURS")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setIdCours(null); }; // not primitive number => keep null value if any
-		cours.setLibelle(rs.getString("LIBELLE")); // java.lang.String
-		cours.setNbHeures(rs.getInt("NB_HEURES")); // java.lang.Integer
-		if ( rs.wasNull() ) { cours.setNbHeures(null); }; // not primitive number => keep null value if any
-		return cours ;
+		typesexe.setIdSexe(rs.getInt("ID_SEXE")); // java.lang.Integer
+		if ( rs.wasNull() ) { typesexe.setIdSexe(null); }; // not primitive number => keep null value if any
+		typesexe.setLabelSexe(rs.getString("LABEL_SEXE")); // java.lang.String
+		return typesexe ;
 	}
 
 	//----------------------------------------------------------------------
@@ -117,10 +113,10 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord findById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		if ( super.doSelect(cours) ) {
-			return cours ;
+	public TypesexeRecord findById( Integer idSexe ) {
+		TypesexeRecord typesexe = newInstanceWithPrimaryKey( idSexe ) ;
+		if ( super.doSelect(typesexe) ) {
+			return typesexe ;
 		}
 		else {
 			return null ; // Not found
@@ -131,7 +127,7 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public List<CoursRecord> findAll() {
+	public List<TypesexeRecord> findAll() {
 		return super.doSelectAll();
 	}
 
@@ -140,21 +136,21 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * Loads the given bean, it is supposed to contains the primary key value(s) in its attribute(s)<br>
 	 * If found, the given instance is populated with the values retrieved from the database<br>
 	 * If not found, the given instance remains unchanged
-	 * @param cours
+	 * @param typesexe
 	 * @return true if found, false if not found
 	 */
 	//@Override
-	public boolean load( CoursRecord cours ) {
-		return super.doSelect(cours) ;
+	public boolean load( TypesexeRecord typesexe ) {
+		return super.doSelect(typesexe) ;
 	}
 
     //----------------------------------------------------------------------
 	/**
 	 * Inserts the given bean in the database 
-	 * @param cours
+	 * @param typesexe
 	 */
-	public long insert(CoursRecord cours) {
-		super.doInsert(cours);
+	public long insert(TypesexeRecord typesexe) {
+		super.doInsert(typesexe);
 		return 0L ;
 	}
 
@@ -163,9 +159,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord create(CoursRecord cours) {
-		insert(cours);
-		return cours ;
+	public TypesexeRecord create(TypesexeRecord typesexe) {
+		insert(typesexe);
+		return typesexe ;
 	}	
 
     //----------------------------------------------------------------------
@@ -173,8 +169,8 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean update(CoursRecord cours) {
-		int r = super.doUpdate(cours);
+	public boolean update(TypesexeRecord typesexe) {
+		int r = super.doUpdate(typesexe);
 		return r > 0 ;
 
 	}	
@@ -184,14 +180,14 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public CoursRecord save(CoursRecord cours) {
-		if ( super.doExists(cours) ) {
-			super.doUpdate(cours);
+	public TypesexeRecord save(TypesexeRecord typesexe) {
+		if ( super.doExists(typesexe) ) {
+			super.doUpdate(typesexe);
 		}
 		else {
-			super.doInsert(cours);
+			super.doInsert(typesexe);
 		}
-		return cours ;
+		return typesexe ;
 	}	
 
     //----------------------------------------------------------------------
@@ -199,9 +195,9 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean deleteById( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		int r = super.doDelete(cours);
+	public boolean deleteById( Integer idSexe ) {
+		TypesexeRecord typesexe = newInstanceWithPrimaryKey( idSexe ) ;
+		int r = super.doDelete(typesexe);
 		return r > 0 ;
 	}
 
@@ -210,31 +206,31 @@ public class CoursPersistenceJdbc extends GenericDAO<CoursRecord> implements Cou
 	 * @see interface 
 	 */
 	@Override
-	public boolean delete( CoursRecord cours ) {
-		int r = super.doDelete(cours);
+	public boolean delete( TypesexeRecord typesexe ) {
+		int r = super.doDelete(typesexe);
 		return r > 0 ;
 	}
 
     //----------------------------------------------------------------------
 	/**
 	 * Checks the existence of a record in the database using the given primary key value(s)
-	 * @param idCours;
+	 * @param idSexe;
 	 * @return
 	 */
 	// @Override
-	public boolean exists( Integer idCours ) {
-		CoursRecord cours = newInstanceWithPrimaryKey( idCours ) ;
-		return super.doExists(cours);
+	public boolean exists( Integer idSexe ) {
+		TypesexeRecord typesexe = newInstanceWithPrimaryKey( idSexe ) ;
+		return super.doExists(typesexe);
 	}
     //----------------------------------------------------------------------
 	/**
 	 * Checks the existence of the given bean in the database 
-	 * @param cours
+	 * @param typesexe
 	 * @return
 	 */
 	// @Override
-	public boolean exists( CoursRecord cours ) {
-		return super.doExists(cours);
+	public boolean exists( TypesexeRecord typesexe ) {
+		return super.doExists(typesexe);
 	}
 
     //----------------------------------------------------------------------

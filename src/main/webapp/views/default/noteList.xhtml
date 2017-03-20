@@ -52,7 +52,7 @@
 								<h:outputText value="#{msg.list_note_exam_date}" />
 							</f:facet>
 							<h:outputText value="#{currentNote.dateExamen}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
+								<f:convertDateTime pattern="#{msg.date_pattern}" />
 							</h:outputText>
 						</h:column>
 						<h:column>

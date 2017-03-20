@@ -43,7 +43,7 @@
 					<div class="form-group form-group-lg">
 						<h:inputText styleClass="form-control no-border" id="examDateCompId"
 							p:placeholder="Exam date(dd-MM-yyyy)" value="#{noteManagedBean.currentNote.dateExamen}" title="Exam Date(dd-MM-yyyy)">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
+							<f:convertDateTime pattern="#{msg.date_pattern}" />
 						</h:inputText>
 						<rich:message for="examDateCompId" />
 					</div>

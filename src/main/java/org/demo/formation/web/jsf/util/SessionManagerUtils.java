@@ -7,10 +7,11 @@ import javax.faces.context.FacesContext;
 
 public class SessionManagerUtils {
 
-	public static Object getObjectInSession (String sessionKey){
+	public static Object getObjectInSession(String sessionKey) {
 		FacesContext ctx = FacesContext.getCurrentInstance();
-        ExternalContext extCtx = ctx.getExternalContext();
-        Map<String, Object> sessionMap = extCtx.getSessionMap();
-        return sessionMap.get(sessionKey);
+		ExternalContext extCtx = ctx.getExternalContext();
+		Map<String, Object> sessionMap = extCtx.getSessionMap();
+		return sessionMap.get(sessionKey);
 	}
+
 }

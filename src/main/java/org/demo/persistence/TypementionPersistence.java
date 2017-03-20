@@ -6,25 +6,25 @@ package org.demo.persistence;
 
 import java.util.List;
 
-import org.demo.data.record.CoursRecord;
+import org.demo.data.record.TypementionRecord;
 
 /**
- * Persistence Interface for CoursRecord.
+ * Persistence Interface for TypementionRecord.
  */
-public interface CoursPersistence { 
+public interface TypementionPersistence { 
 
 	/**
 	 * Tries to find an entity using its Id / Primary Key
-	 * @param idCours
+	 * @param idMention
 	 * @return entity
 	 */
-	CoursRecord findById( Integer idCours  ) ;
+	TypementionRecord findById( Integer idMention  ) ;
 
 	/**
 	 * Finds all entities.
 	 * @return all entities
 	 */
-	List<CoursRecord> findAll();
+	List<TypementionRecord> findAll();
 
 	/**
 	 * Counts all the records present in the database
@@ -38,48 +38,48 @@ public interface CoursPersistence {
 	 * @param entity
 	 * @return entity
 	 */
-	CoursRecord save(CoursRecord entity);
+	TypementionRecord save(TypementionRecord entity);
 
 	/**
 	 * Updates the given entity in the database
 	 * @param entity
 	 * @return true if the entity has been updated, false if not found and not updated
 	 */
-	boolean update(CoursRecord entity);
+	boolean update(TypementionRecord entity);
 
 	/**
 	 * Creates the given entity in the database
 	 * @param entity
 	 * @return
 	 */
-	CoursRecord create(CoursRecord entity);
+	TypementionRecord create(TypementionRecord entity);
 
 	/**
 	 * Deletes an entity using its Id / Primary Key
-	 * @param idCours
+	 * @param idMention
 	 * @return true if the entity has been deleted, false if not found and not deleted
 	 */
-	boolean deleteById( Integer idCours );
+	boolean deleteById( Integer idMention );
 
 	/**
 	 * Deletes an entity using the Id / Primary Key stored in the given object
 	 * @param the entity to be deleted (supposed to have a valid Id/PK )
 	 * @return true if the entity has been deleted, false if not found and not deleted
 	 */
-	boolean delete( CoursRecord entity );
+	boolean delete( TypementionRecord entity );
 
 	/**
 	 * Returns true if an entity exists with the given Id / Primary Key 
-	 * @param idCours
+	 * @param idMention
 	 * @return
 	 */
-	public boolean exists( Integer idCours ) ;
+	public boolean exists( Integer idMention ) ;
 
 	/**
 	 * Returns true if the given entity exists
 	 * @param entity
 	 * @return
 	 */
-	public boolean exists( CoursRecord entity ) ;
+	public boolean exists( TypementionRecord entity ) ;
 
 }

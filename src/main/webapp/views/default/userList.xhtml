@@ -5,25 +5,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="/views/default/template.xhtml">
 
 	<ui:define name="body">
 		<h:form>
-			<section class="container">
-			<div class="pages">
-				<header>
-				<div align="left">
-					<h1>
-						<h:outputText value="#{msg.list_users_msg}" />
-					</h1>
-				</div>
-				</header>
+			<div class="container">
+				<h1>
+					<h:outputText value="#{msg.list_users_title}" />
+				</h1>
 				<div class="taches table-responsive">
-					<h:link outcome="create-user">
-						<h:graphicImage width="30" value="../../img/carousel_plus.png"
-							title="#{msg.list_users_add_user}" />
+					<h:link outcome="user-manage" title="#{msgUser.users_add_user}">
+						<span class="glyphicon glyphicon-plus btn-lg" />
 					</h:link>
 					<h:dataTable id="userListDatatableId"
 						value="#{listUserManagedBean.listeUsers}" var="currentUser"
@@ -32,65 +25,62 @@
 						<h:column>
 							<!-- column header -->
 							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_name}" />
+								<h:outputText value="#{msgUser.users_nom}" />
 							</f:facet>
 		    				#{currentUser.nom}
 		    			</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_firstname}" />
+								<h:outputText value="#{msgUser.users_prenom}" />
 							</f:facet>
 		    				#{currentUser.prenom}
 		    			</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_name}" />
+								<h:outputText value="#{msgUser.users_cp}" />
 							</f:facet>
 		    				#{currentUser.codePostal}
 		    			</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_service}" />
-							</f:facet>
-		    				#{currentUser.libDepartement}
-		    			</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_mail}" />
+								<h:outputText value="#{msgUser.users_mail}" />
 							</f:facet>
 		    				#{currentUser.email}
 		    			</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg.list_users_date_inscription}" />
+								<h:outputText value="#{msgUser.users_date_registration}" />
 							</f:facet>
 							<h:outputText value="#{currentUser.dateInscription}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
+								<f:convertDateTime pattern="#{msg.date_pattern}" />
 							</h:outputText>
 						</h:column>
 						<h:column>
-							<f:facet name="header">Actions</f:facet>
-							<!-- Lien pour l'affichage du detail -->
-							<h:link outcome="preload-user"
+							<f:facet name="header">
+								<h:outputText value="#{msg.edit}" />
+							</f:facet>
+							<!-- Link for detail display -->
+							<h:link outcome="user-manage"
+								title="#{msgUser.users_disp_detail}"
 								disabled="#{currentUser.idEleve == 0}">
 								<f:param name="idUserParam" value="#{currentUser.idEleve}" />
-								<h:graphicImage width="30" value="../../img/btn_detail.png"
-									title="#{msg.list_users_disp_detail}" />
+								<span class="glyphicon glyphicon-edit btn-lg" />
 							</h:link>
-							<!-- Lien pour l'affichage du bouton de suppression -->
-							<h:commandLink
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.delete}" />
+							</f:facet>
+							<!-- Link to display the delete button -->
+							<h:commandLink title="#{msgUser.users_delete_user}"
 								action="#{listUserManagedBean.deleteUserById(currentUser.idEleve)}"
-								onclick="return confirm('Etes vous certain de vouloir supprimer Cette entite ?');"
-								disabled="#{currentUser.idEleve == 0}">
-								<f:ajax render="userListDatatableId" />
-								<h:graphicImage width="30" value="../../img/btn_delete.jpg"
-									title="#{msg.list_users_delete_user}" />
+								onclick="return confirm('#{msgUser.users_delete_confirm}');">
+								<span class="glyphicon glyphicon-remove btn-lg" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</div>
 			</div>
-			</section>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -18,6 +18,11 @@
 			<var>msg</var>
 		</resource-bundle>
 
+		<resource-bundle>
+			<base-name>messages.messagesUser</base-name>
+			<var>msgUser</var>
+		</resource-bundle>
+
 	</application>
 
 	<!-- Navigation in Home Page -->
@@ -36,19 +41,56 @@
 			<to-view-id>/views/default/noteList.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<!-- Navigation for creating/update a user/note -->
+
+	<!-- Navigation in List Page -->
 	<navigation-rule>
-		<from-view-id>/views/default/manageUser.xhtml</from-view-id>
+		<from-view-id>/views/default/userList.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>SUCCESS</from-outcome>
+			<from-outcome>user-list</from-outcome>
 			<to-view-id>/views/default/userList.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>ERROR</from-outcome>
+			<from-outcome>user-manage</from-outcome>
 			<to-view-id>/views/default/manageUser.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
+	<navigation-rule>
+		<from-view-id>/views/default/noteList.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{noteManagedBean.loadNote(currentNote)}</from-action>
+			<from-outcome>SUCCESS</from-outcome>
+			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-note</from-outcome>
+			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/views/default/coursList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>preload-lesson</from-outcome>
+			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-lesson</from-outcome>
+			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation in Manage Page -->
+	<navigation-rule>
+		<from-view-id>/views/default/manageUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>user-list</from-outcome>
+			<to-view-id>/views/default/userList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
 	<navigation-rule>
 		<from-view-id>/views/default/manageNote.xhtml</from-view-id>
 		<navigation-case>
@@ -60,7 +102,7 @@
 			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<from-view-id>/views/default/manageCours.xhtml</from-view-id>
 		<navigation-case>
@@ -69,45 +111,6 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>ERROR</from-outcome>
-			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-
-	<!-- Navigation for displaying preloaded registration page -->
-	<navigation-rule>
-		<from-view-id>/views/default/userList.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>preload-user</from-outcome>
-			<to-view-id>/views/default/manageUser.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>create-user</from-outcome>
-			<to-view-id>/views/default/manageUser.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/views/default/noteList.xhtml</from-view-id>
-		<navigation-case>
-		    <from-action>#{noteManagedBean.loadNote(currentNote)}</from-action>
-			<from-outcome>SUCCESS</from-outcome>
-			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>create-note</from-outcome>
-			<to-view-id>/views/default/manageNote.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/views/default/coursList.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>preload-lesson</from-outcome>
-			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>create-lesson</from-outcome>
 			<to-view-id>/views/default/manageCours.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>

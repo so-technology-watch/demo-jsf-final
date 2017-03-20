@@ -61,7 +61,7 @@
 								<h:outputText value="#{msg.list_users_date_inscription}" />
 							</f:facet>
 							<h:outputText value="#{currentUser.dateInscription}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
+								<f:convertDateTime pattern="#{msg.date_pattern}" />
 							</h:outputText>
 						</rich:column>
 						<rich:column>
