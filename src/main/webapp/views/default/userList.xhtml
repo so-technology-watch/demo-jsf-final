@@ -15,9 +15,13 @@
 					<h:outputText value="#{msg.list_users_title}" />
 				</h1>
 				<div class="taches table-responsive">
-					<h:link outcome="user-manage" title="#{msgUser.users_add_user}">
-						<span class="glyphicon glyphicon-plus btn-lg" />
-					</h:link>
+					<div align="right">
+						<h:link outcome="user-manage" styleClass="btn btn-success">
+							<span class="glyphicon glyphicon-plus" />
+							<h:outputText value=" #{msgUser.users_add_user}" />
+						</h:link>
+					</div>
+					<br />
 					<h:dataTable id="userListDatatableId"
 						value="#{listUserManagedBean.listeUsers}" var="currentUser"
 						styleClass="table table-bordered" headerClass="order-table-header"
@@ -60,23 +64,26 @@
 								<h:outputText value="#{msg.edit}" />
 							</f:facet>
 							<!-- Link for detail display -->
-							<h:link outcome="user-manage"
-								title="#{msgUser.users_disp_detail}"
-								disabled="#{currentUser.idEleve == 0}">
-								<f:param name="idUserParam" value="#{currentUser.idEleve}" />
-								<span class="glyphicon glyphicon-edit btn-lg" />
-							</h:link>
+							<div align="center">
+								<h:link outcome="user-manage" styleClass="btn btn-default">
+									<f:param name="idUserParam" value="#{currentUser.idEleve}" />
+									<span class="glyphicon glyphicon-edit" />
+								</h:link>
+							</div>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.delete}" />
 							</f:facet>
 							<!-- Link to display the delete button -->
-							<h:commandLink title="#{msgUser.users_delete_user}"
-								action="#{listUserManagedBean.deleteUserById(currentUser.idEleve)}"
-								onclick="return confirm('#{msgUser.users_delete_confirm}');">
-								<span class="glyphicon glyphicon-remove btn-lg" />
-							</h:commandLink>
+							<div align="center">
+								<h:commandLink title="#{msgUser.users_delete_user}"
+									styleClass="btn btn-danger"
+									action="#{listUserManagedBean.deleteUserById(currentUser.idEleve)}"
+									onclick="return confirm('#{msgUser.users_delete_confirm}');">
+									<span class="glyphicon glyphicon-remove" />
+								</h:commandLink>
+							</div>
 						</h:column>
 					</h:dataTable>
 				</div>

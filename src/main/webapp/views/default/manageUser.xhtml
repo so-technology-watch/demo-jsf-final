@@ -15,16 +15,17 @@
 					<h:outputText value="#{msgUser.subscribe_title}" />
 				</h1>
 				<br />
+				<h:messages errorClass="alert alert-danger"
+					style="list-style-type:none;" warnClass="alert alert-warning"
+					infoClass="alert alert-success" globalOnly="true" />
 				<div class="form-group row">
-
 					<h:outputLabel styleClass="col-md-2 col-form-label"
-						value="#{msg.id}" for="id" />
-
+						value="#{msg.id} *" for="idEleve" />
 					<div class="col-md-10">
-						<h:inputText id="id" class="form-control" required="true"
+						<h:inputText id="idEleve" class="form-control" required="true"
 							label="#{msg.id}" disabled="#{userManagedBean.isUpdate}"
 							value="#{userManagedBean.userCourant.idEleve}" />
-						<h:message for="id" />
+						<h:message for="idEleve" errorClass="alert-danger" />
 					</div>
 				</div>
 				<div class="form-group row">
@@ -36,25 +37,25 @@
 						<h:inputText class="form-control" id="firstName"
 							label="#{msgUser.users_prenom}"
 							value="#{userManagedBean.userCourant.prenom}" />
-						<h:message for="firstName" />
+						<h:message for="firstName" errorClass="alert-danger" />
 					</div>
 				</div>
 				<div class="form-group row">
 
 					<h:outputLabel styleClass="col-md-2 col-form-label"
-						value="#{msgUser.users_nom}" for="name" />
+						value="#{msgUser.users_nom} *" for="name" />
 
 					<div class="col-md-10">
 						<h:inputText class="form-control" id="name"
 							label="#{msgUser.users_nom}" required="true"
 							value="#{userManagedBean.userCourant.nom}" />
-						<h:message for="name" />
+						<h:message for="name" errorClass="alert-danger" />
 					</div>
 				</div>
 				<div class="form-group row">
 
 					<h:outputLabel styleClass="col-md-2 col-form-label"
-						value="#{msgUser.users_sexe}" for="typesexe" />
+						value="#{msgUser.users_sexe} *" for="typesexe" />
 
 					<div class="col-md-8">
 						<h:selectOneMenu id="typesexe" class="form-control"
@@ -64,13 +65,13 @@
 								value="#{userManagedBean.getListTypesexeListItem()}" var="item"
 								itemValue="#{item.value}" itemLabel="#{item.label}" />
 						</h:selectOneMenu>
-						<h:message for="typesexe" />
+						<h:message for="typesexe" errorClass="alert-danger" />
 					</div>
 					<div class="col-md-2">
-						<h:link outcome="user-list">
+						<h:link outcome="user-list" styleClass="btn btn-primary">
 							<f:param name="idTypesexe"
 								value="#{userManagedBean.userCourant.sexe}" />
-							<span class="glyphicon glyphicon-circle-arrow-right btn-md" />
+							<span class="glyphicon glyphicon-circle-arrow-right" />
 							<h:outputText value=" #{msg.create_update}" />
 						</h:link>
 					</div>
@@ -78,13 +79,13 @@
 				<div class="form-group row">
 
 					<h:outputLabel styleClass="col-md-2 col-form-label"
-						value="#{msgUser.users_mail}" for="email" />
+						value="#{msgUser.users_mail} *" for="email" />
 
 					<div class="col-md-10">
 						<h:inputText class="form-control" id="email"
 							label="#{msgUser.users_mail}" required="true"
 							value="#{userManagedBean.userCourant.email}" />
-						<h:message for="email" />
+						<h:message for="email" errorClass="alert-danger" />
 					</div>
 				</div>
 				<div class="form-group row">
@@ -96,7 +97,7 @@
 						<h:inputSecret class="form-control" id="password"
 							label="#{msgUser.user_password}"
 							value="#{userManagedBean.userCourant.password}" />
-						<h:message for="password" />
+						<h:message for="password" errorClass="alert-danger" />
 					</div>
 				</div>
 				<div class="form-group row">
@@ -108,34 +109,44 @@
 						<h:inputText class="form-control" id="codePostal"
 							label="#{msgUser.users_cp}"
 							value="#{userManagedBean.userCourant.codePostal}" />
-						<h:message for="codePostal" />
+						<h:message for="codePostal" errorClass="alert-danger" />
 					</div>
 				</div>
 				<br />
-				<h:messages globalOnly="true" />
-				<div align="center">
-					<h:commandLink styleClass="btn"
-						rendered="#{userManagedBean.isUpdate}"
-						onclick="return confirm('#{msgUser.users_delete_confirm}');"
-						action="#{listUserManagedBean.deleteUserById(userManagedBean.userCourant.idEleve)}">
-						<span class="glyphicon glyphicon-trash btn-md" />
-						<h:outputText value=" #{msg.delete}" />
-					</h:commandLink>
-					<h:commandLink styleClass="btn"
-						rendered="#{userManagedBean.isUpdate}"
-						action="#{userManagedBean.creatNewUser}">
-						<span class="glyphicon glyphicon-plus-sign btn-md" />
-						<h:outputText value=" #{msg.create}" />
-					</h:commandLink>
-					<h:link styleClass="btn" outcome="user-list">
-						<span class="glyphicon glyphicon-remove btn-md" />
-						<h:outputText value=" #{msg.cancel}" />
-					</h:link>
-					<h:commandLink styleClass="btn"
-						action="#{userManagedBean.addUserAction}">
-						<span class="glyphicon glyphicon-saved btn-md" />
-						<h:outputText value=" #{msg.save}" />
-					</h:commandLink>
+
+				<div class="row">
+					<div align="center">
+						<div class="col-xs-2  col-xs-offset-2">
+							<h:link styleClass="btn btn-default" outcome="user-list">
+								<span class="glyphicon glyphicon-circle-arrow-left btn-md" />
+								<h:outputText value=" #{msg.cancel}" />
+							</h:link>
+						</div>
+						<div class="col-xs-2">
+							<h:commandLink styleClass="btn btn-danger"
+								rendered="#{userManagedBean.isUpdate}"
+								onclick="return confirm('#{msgUser.users_delete_confirm}');"
+								action="#{listUserManagedBean.deleteUserById(userManagedBean.userCourant.idEleve)}">
+								<span class="glyphicon glyphicon-trash btn-md" />
+								<h:outputText value=" #{msg.delete}" />
+							</h:commandLink>
+						</div>
+						<div class="col-xs-2">
+							<h:commandLink styleClass="btn btn-success"
+								rendered="#{userManagedBean.isUpdate}"
+								action="#{userManagedBean.creatNewUser}">
+								<span class="glyphicon glyphicon-plus-sign btn-md" />
+								<h:outputText value=" #{msg.create}" />
+							</h:commandLink>
+						</div>
+						<div class="col-xs-2">
+							<h:commandLink styleClass="btn btn-primary"
+								action="#{userManagedBean.addUserAction}">
+								<span class="glyphicon glyphicon-saved btn-md" />
+								<h:outputText value=" #{msg.save}" />
+							</h:commandLink>
+						</div>
+					</div>
 				</div>
 			</h:form>
 		</div>

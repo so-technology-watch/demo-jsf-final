@@ -20,6 +20,7 @@ import org.demo.formation.web.jsf.util.SessionManagerUtils;
 import org.demo.persistence.ElevePersistence;
 import org.demo.persistence.TypesexePersistence;
 import org.demo.persistence.commons.PersistenceServiceProvider;
+import org.demo.formation.web.jsf.util.FacesUtils;
 
 @ManagedBean(name = "userManagedBean")
 @ViewScoped
@@ -72,20 +73,17 @@ public class UserManagedBean implements Serializable {
 		try {
 			if (isUpdate) {
 				this.userService.update(userCourant);
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "élément mis à jour", null));
+				FacesUtils.addMessage(FacesMessage.SEVERITY_INFO, null, "updateOK", "");
 
 			} else {
 				userCourant.setDateInscription(new Date());
 				this.userService.create(userCourant);
 				this.isUpdate = true;
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "élément créer", null));
+				FacesUtils.addMessage(FacesMessage.SEVERITY_INFO, null, "createOK", "");
 
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesUtils.addMessage(FacesMessage.SEVERITY_ERROR, null, e.getMessage(), "");
 		}
 	}
 

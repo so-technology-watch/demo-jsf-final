@@ -16,7 +16,7 @@
 </h:head>
 
 <h:body>
-	<h:form>
+	<h:form styleClass="form-inline">
 		<table class="table table-striped">
 			<tr>
 				<td><h:link outcome="/views/index">
@@ -28,8 +28,8 @@
 				<td>
 					<div align="right">
 						<h:outputText value="#{msg.language}: " />
-						<h:selectOneMenu value="#{languageManagedBean.localeCode}"
-							onchange="submit()"
+						<h:selectOneMenu class="form-control" style="width:auto;"
+							value="#{languageManagedBean.localeCode}" onchange="submit()"
 							valueChangeListener="#{languageManagedBean.countryLocaleCodeChanged}">
 							<f:selectItems value="#{languageManagedBean.countriesInMap}" />
 						</h:selectOneMenu>
